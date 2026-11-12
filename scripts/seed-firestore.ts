@@ -27,9 +27,10 @@ import {
 import type { User } from '../src/types/models';
 
 // Configure emulator endpoints if not already in environment
-const PROJECT_ID = process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID ?? 'demo-afyaqueue';
-const FIRESTORE_HOST = process.env.FIRESTORE_EMULATOR_HOST ?? '127.0.0.1:8080';
-const AUTH_HOST = process.env.FIREBASE_AUTH_EMULATOR_HOST ?? '127.0.0.1:9099';
+const rawProjectId = process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID?.trim();
+const PROJECT_ID = rawProjectId && rawProjectId.length > 0 ? rawProjectId : (process.env.GCLOUD_PROJECT?.trim() || 'demo-afyaqueue');
+const FIRESTORE_HOST = process.env.FIRESTORE_EMULATOR_HOST?.trim() || '127.0.0.1:8080';
+const AUTH_HOST = process.env.FIREBASE_AUTH_EMULATOR_HOST?.trim() || '127.0.0.1:9099';
 
 process.env.GCLOUD_PROJECT = PROJECT_ID;
 process.env.GOOGLE_CLOUD_PROJECT = PROJECT_ID;
