@@ -14,6 +14,12 @@ import { initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
+// Silence benign GCP metadata probe warnings when running against local emulators
+process.on('warning', (w) => {
+  if (w.name === 'MetadataLookupWarning') return;
+  console.warn(w);
+});
+
 import {
   INITIAL_ANNOUNCEMENTS,
   INITIAL_APPOINTMENTS,
