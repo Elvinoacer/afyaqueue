@@ -50,7 +50,7 @@
   },
   "scripts": {
     "start": "expo start",
-    "test:math": "bun scripts/verify-queue-math.test.ts",
+    "test:math": "bun test scripts/verify-queue-math.test.ts",
     "test:rules": "firebase emulators:exec --only firestore --project demo-afyaqueue \"bun test tests/rules\"",
     "seed": "bun scripts/seed-firestore.ts",
     "emulators": "firebase emulators:start --project demo-afyaqueue",
