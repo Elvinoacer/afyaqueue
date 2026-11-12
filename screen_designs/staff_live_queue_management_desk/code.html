@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue - Staff Live Queue Desk</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#191c1e",
+            "on-secondary-fixed-variant": "#063fa4",
+            "on-primary": "#ffffff",
+            "secondary-container": "#7297ff",
+            "status-danger": "#DC2626",
+            "background": "#f7f9fb",
+            "primary-fixed-dim": "#81d99b",
+            "inverse-primary": "#81d99b",
+            "surface-bright": "#f7f9fb",
+            "tertiary-fixed": "#ffdbcd",
+            "brand-accent-rust": "#C1541A",
+            "inverse-surface": "#2d3133",
+            "secondary": "#2e58bd",
+            "primary-container": "#1e7a46",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#b3c5ff",
+            "tertiary": "#913500",
+            "on-primary-container": "#adffc2",
+            "text-muted": "#64748B",
+            "error-container": "#ffdad6",
+            "surface-container": "#eceef0",
+            "outline": "#6f7a70",
+            "on-tertiary-fixed": "#360f00",
+            "on-surface-variant": "#3f4940",
+            "on-primary-fixed-variant": "#00522a",
+            "outline-variant": "#bec9be",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#066d3a",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffe8df",
+            "surface-container-low": "#f2f4f6",
+            "border-subtle": "#E2E8F0",
+            "brand-green-soft": "#E6F4EC",
+            "primary": "#006032",
+            "on-secondary-fixed": "#00174a",
+            "surface-variant": "#e0e3e5",
+            "surface": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b6480b",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-card": "#FFFFFF",
+            "brand-blue-soft": "#EBF1FF",
+            "secondary-fixed": "#dbe1ff",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "brand-navy": "#16264A",
+            "on-secondary-container": "#002c7c",
+            "primary-fixed": "#9df6b6",
+            "tertiary-fixed-dim": "#ffb597",
+            "on-primary-fixed": "#00210d",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-sm": "0.75rem",
+            "margin": "1rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "margin-md": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex justify-center selection:bg-brand-blue-soft selection:text-secondary">
+<!-- Mobile Viewport Container Shell -->
+<div class="w-full max-w-md bg-background min-h-screen flex flex-col relative pb-36">
+<!-- Top App Bar (Shared Anchor Execution) -->
+<header class="sticky top-0 z-40 flex items-center justify-between w-full h-14 px-4 bg-surface-card border-b border-border-subtle shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="local_hospital">local_hospital</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AfyaQueue</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Add Doctor" class="w-9 h-9 rounded-full flex items-center justify-center text-primary bg-brand-green-soft border border-border-subtle hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="person_add">person_add</span>
+</button>
+<button aria-label="Broadcast Alert" class="w-9 h-9 rounded-full flex items-center justify-center text-brand-navy bg-surface-container-low border border-border-subtle hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="campaign">campaign</span>
+</button>
+<button aria-label="Notifications" class="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Sub-header Role & Context Identity Strip -->
+<section class="px-margin pt-3 pb-2 bg-surface-card border-b border-border-subtle flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-blue-soft text-secondary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Staff Desk (Nurse / Receptionist)
+        </span>
+<div class="flex items-center gap-1 text-text-muted font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="sync">sync</span>
+<span class="font-label-sm text-label-sm text-primary">Live (1-2s updates)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile font-bold text-brand-navy">Today's Live Queue</h1>
+<span class="px-2 py-1 bg-surface-container-low border border-border-subtle rounded-lg text-brand-navy font-label-md text-label-md">
+          MTRH Wing 4B
+        </span>
+</div>
+</section>
+<!-- Doctor Selector Horizontal Strip -->
+<section class="py-2.5 px-margin bg-background border-b border-border-subtle">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-overline text-overline text-text-muted">ACTIVE CLINICIAN STREAM</span>
+<button class="text-secondary font-label-sm text-label-sm flex items-center gap-0.5 hover:underline" type="button">
+          Switch Clinic
+          <span class="material-symbols-outlined text-xs" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+</div>
+<div class="flex gap-2 overflow-x-auto custom-scroll pb-1">
+<!-- Selected Active Chip -->
+<button class="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm" type="button">
+<span class="material-symbols-outlined text-base" data-icon="stethoscope">stethoscope</span>
+<span>Dr. Sarah Wanjiku (Gen Med)</span>
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+</button>
+<!-- Other Doctor Chips -->
+<button class="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-brand-navy font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-base text-text-muted" data-icon="child_care">child_care</span>
+<span>Dr. David Kiprono (Pediatrics)</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-brand-navy font-label-md text-label-md hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-base text-text-muted" data-icon="dentistry">dentistry</span>
+<span>Dr. Amina Hassan (Dental)</span>
+</button>
+</div>
+</section>
+<!-- Main Content Area -->
+<main class="px-margin pt-3 flex flex-col gap-3">
+<!-- Real-time Queue Status Counters Banner (Split 2-card KPI grid) -->
+<section class="grid grid-cols-2 gap-2.5">
+<!-- Left Card (Emerald #E6F4EC) -->
+<div class="bg-brand-green-soft border border-border-subtle rounded-xl p-3 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-primary-container">NOW SERVING</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-[10px]">
+              Active
+            </span>
+</div>
+<div class="my-1">
+<span class="font-display-giant-mobile text-display-giant-mobile font-bold text-primary-container leading-none">12</span>
+</div>
+<div class="pt-1 border-t border-primary-container/20 flex flex-col">
+<span class="font-label-md text-label-md text-brand-navy font-semibold truncate">Grace Wanjiru</span>
+<span class="font-body-sm text-body-sm text-primary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="meeting_room">meeting_room</span>
+              Room 14
+            </span>
+</div>
+</div>
+<!-- Right Card (Soft Amber/Orange) -->
+<div class="bg-[#FFF7ED] border border-border-subtle rounded-xl p-3 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-brand-accent-rust">WAITING IN QUEUE</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px]">
+              +3 Urgent
+            </span>
+</div>
+<div class="my-1">
+<span class="font-display-giant-mobile text-display-giant-mobile font-bold text-brand-accent-rust leading-none">6</span>
+</div>
+<div class="pt-1 border-t border-brand-accent-rust/20 flex flex-col">
+<span class="font-label-md text-label-md text-brand-navy font-semibold truncate">Next: #13 Peter K.</span>
+<span class="font-body-sm text-body-sm text-text-muted flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="timer">timer</span>
+              Est: ~6 mins
+            </span>
+</div>
+</div>
+</section>
+<!-- Sub-metric Info Banner -->
+<section class="bg-surface-card border border-border-subtle rounded-xl px-3 py-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="receipt_long">receipt_long</span>
+<span class="font-body-sm text-body-sm text-brand-navy">Last Issued Token:</span>
+<span class="font-label-md text-label-md font-bold text-brand-navy">#18 Kevin Kibet</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted">Avg: 9m/patient</span>
+</section>
+<!-- Live Patient Queue List Section -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md font-bold text-brand-navy">Patients Waiting</h2>
+<span class="font-body-sm text-body-sm text-text-muted">(Today, 22 Sep 2026)</span>
+</div>
+<button class="text-secondary font-label-sm text-label-sm flex items-center gap-0.5 hover:underline" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+            Sort
+          </button>
+</div>
+<!-- Patients Queue List Container -->
+<div class="bg-surface-card border border-border-subtle rounded-xl overflow-hidden divide-y divide-border-subtle">
+<!-- Row 1: Completed #11 -->
+<article class="p-3 flex items-center justify-between bg-surface-container-low/40">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-label-lg text-label-lg font-bold text-text-muted">
+                #11
+              </div>
+<div>
+<p class="font-label-md text-label-md font-bold text-text-muted line-through">Faith Njeri</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-muted">
+<span>09:15 AM</span>
+<span>•</span>
+<span>Dr. Sarah</span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-text-muted font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="check">check</span>
+              COMPLETED
+            </span>
+</article>
+<!-- Row 2: Active Row #12 (Glowing Border & Soft Blue) -->
+<article class="p-3 flex items-center justify-between bg-brand-blue-soft border-l-4 border-l-secondary">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-secondary text-on-secondary flex items-center justify-center font-headline-md text-headline-md font-bold shadow-sm">
+                #12
+              </div>
+<div>
+<div class="flex items-center gap-1.5">
+<p class="font-label-lg text-label-lg font-bold text-brand-navy">Grace Wanjiru</p>
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="medical_information">medical_information</span>
+</div>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-secondary font-medium">
+<span>09:30 AM</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+                    Consultation in progress
+                  </span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-xs" data-icon="record_voice_over">record_voice_over</span>
+              SERVING NOW [NOW]
+            </span>
+</article>
+<!-- Row 3: Next in Line #13 -->
+<article class="p-3 flex items-center justify-between bg-[#FFFBF5]">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-tertiary-fixed text-tertiary-container flex items-center justify-center font-headline-md text-headline-md font-bold">
+                #13
+              </div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-brand-navy">Peter Kipchoge</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-muted">
+<span>09:45 AM</span>
+<span>•</span>
+<span>Follow-up</span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="notifications_active">notifications_active</span>
+              Next in Line
+            </span>
+</article>
+<!-- Row 4: Waiting #14 -->
+<article class="p-3 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low text-brand-navy flex items-center justify-center font-headline-md text-headline-md font-bold">
+                #14
+              </div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-brand-navy">Mary Atieno</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-muted">
+<span>10:00 AM</span>
+<span>•</span>
+<span>Routine Check</span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-text-muted font-label-sm text-label-sm">
+              Waiting
+            </span>
+</article>
+<!-- Row 5: Waiting #15 -->
+<article class="p-3 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low text-brand-navy flex items-center justify-center font-headline-md text-headline-md font-bold">
+                #15
+              </div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-brand-navy">Brian Ochieng</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-muted">
+<span>10:15 AM</span>
+<span>•</span>
+<span>Pharmacy Referral</span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-text-muted font-label-sm text-label-sm">
+              Waiting
+            </span>
+</article>
+<!-- Row 6: Waiting #18 -->
+<article class="p-3 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low text-brand-navy flex items-center justify-center font-headline-md text-headline-md font-bold">
+                #18
+              </div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-brand-navy">Kevin Kibet</p>
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-text-muted">
+<span class="font-mono text-[11px] text-secondary">PT-2026-0142</span>
+<span>•</span>
+<span>10:30 AM</span>
+</div>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-text-muted font-label-sm text-label-sm">
+              Waiting
+            </span>
+</article>
+</div>
+</section>
+<!-- Operational Quick Tools Bento -->
+<section class="grid grid-cols-2 gap-2.5 mb-2">
+<div class="bg-surface-card border border-border-subtle rounded-xl p-3 flex flex-col justify-between">
+<div class="flex items-center gap-2 text-brand-navy font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary" data-icon="pause_circle">pause_circle</span>
+<span>Desk Status</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-1">Normal intake. Room 14 active.</p>
+<button class="mt-2 text-left font-label-sm text-label-sm text-primary hover:underline" type="button">
+            Take 10m Break →
+          </button>
+</div>
+<div class="bg-surface-card border border-border-subtle rounded-xl p-3 flex flex-col justify-between">
+<div class="flex items-center gap-2 text-brand-navy font-label-md text-label-md">
+<span class="material-symbols-outlined text-brand-accent-rust" data-icon="volume_up">volume_up</span>
+<span>Chime System</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-1">PA Speaker: Hall B Online</p>
+<button class="mt-2 text-left font-label-sm text-label-sm text-secondary hover:underline" type="button">
+            Test Audio Chime →
+          </button>
+</div>
+</section>
+</main>
+<!-- Sticky Operational Action Bar (Level 3 Elevation) -->
+<div class="fixed bottom-14 left-0 w-full flex justify-center z-40 px-margin pointer-events-none">
+<div class="w-full max-w-md bg-surface-card/95 backdrop-blur-md border border-border-subtle rounded-xl p-2.5 shadow-lg flex flex-col gap-2 pointer-events-auto">
+<div class="flex items-center gap-2">
+<!-- Primary Call Next Action Button (#F27438 tone represented via brand-accent-rust/tertiary) -->
+<button class="flex-1 min-h-[48px] bg-[#F27438] hover:bg-brand-accent-rust active:scale-[0.98] text-on-primary rounded-xl px-3 py-2 flex flex-col justify-center items-center shadow-md transition-all" type="button">
+<div class="flex items-center gap-2 font-label-lg text-label-lg font-bold tracking-tight">
+<span class="material-symbols-outlined text-xl" data-icon="volume_up">volume_up</span>
+<span>CALL NEXT PATIENT (#13)</span>
+<span class="material-symbols-outlined text-xl" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<span class="font-body-sm text-[11px] text-tertiary-fixed leading-tight">Advances queue to #13 and notifies patient</span>
+</button>
+<!-- Secondary Skip / No-Show Button -->
+<button class="min-h-[48px] px-3 py-2 bg-surface-container-low hover:bg-surface-container active:scale-95 border border-border-subtle text-status-danger rounded-xl flex flex-col items-center justify-center transition-all" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="person_cancel">person_cancel</span>
+<span class="font-label-sm text-label-sm font-semibold">Skip / No-Show</span>
+</button>
+</div>
+</div>
+</div>
+<!-- BottomNavBar (Shared Component Execution - Desk Context Active) -->
+<nav class="fixed bottom-0 left-0 w-full h-14 z-50 flex justify-around items-center px-margin bg-surface-card border-t border-border-subtle shadow-md">
+<!-- Live Queue Destination -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#queue">
+<span class="material-symbols-outlined text-xl" data-icon="confirmation_number">confirmation_number</span>
+<span>Live Queue</span>
+</a>
+<!-- Book Destination -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#book">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_month">calendar_month</span>
+<span>Book</span>
+</a>
+<!-- Records Destination -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#records">
+<span class="material-symbols-outlined text-xl" data-icon="medical_services">medical_services</span>
+<span>Records</span>
+</a>
+<!-- Desk Destination (ACTIVE ITEM) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors font-bold" href="#desk">
+<span class="material-symbols-outlined text-xl" data-icon="clinical_notes" style="font-variation-settings: 'FILL' 1;">clinical_notes</span>
+<span>Desk</span>
+</a>
+<!-- Profile Destination -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#profile">
+<span class="material-symbols-outlined text-xl" data-icon="account_circle">account_circle</span>
+<span>Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

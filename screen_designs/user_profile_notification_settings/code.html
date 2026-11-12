@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue - My Profile &amp; Preferences</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#360f00",
+            "surface-card": "#FFFFFF",
+            "on-tertiary": "#ffffff",
+            "secondary": "#2e58bd",
+            "status-danger": "#DC2626",
+            "on-secondary-fixed": "#00174a",
+            "brand-navy": "#16264A",
+            "text-muted": "#64748B",
+            "on-primary-container": "#adffc2",
+            "on-secondary-container": "#002c7c",
+            "surface-tint": "#066d3a",
+            "surface": "#f7f9fb",
+            "primary-container": "#1e7a46",
+            "secondary-fixed": "#dbe1ff",
+            "outline-variant": "#bec9be",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "secondary-container": "#7297ff",
+            "outline": "#6f7a70",
+            "surface-variant": "#e0e3e5",
+            "surface-bright": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "surface-dim": "#d8dadc",
+            "tertiary-container": "#b6480b",
+            "surface-container": "#eceef0",
+            "brand-accent-rust": "#C1541A",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed-dim": "#ffb597",
+            "error-container": "#ffdad6",
+            "brand-blue-soft": "#EBF1FF",
+            "on-primary-fixed-variant": "#00522a",
+            "on-surface": "#191c1e",
+            "primary-fixed": "#9df6b6",
+            "inverse-surface": "#2d3133",
+            "surface-container-highest": "#e0e3e5",
+            "inverse-primary": "#81d99b",
+            "surface-container-low": "#f2f4f6",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed": "#00210d",
+            "brand-green-soft": "#E6F4EC",
+            "on-surface-variant": "#3f4940",
+            "on-tertiary-container": "#ffe8df",
+            "primary": "#006032",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary": "#913500",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#81d99b",
+            "error": "#ba1a1a",
+            "border-subtle": "#E2E8F0",
+            "on-secondary-fixed-variant": "#063fa4",
+            "background": "#f7f9fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-2xl": "3rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "gutter-sm": "0.75rem",
+            "gutter": "1rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "margin-md": "1.5rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-brand-navy min-h-screen pb-24 font-body-md antialiased selection:bg-brand-blue-soft selection:text-secondary">
+<!-- TopAppBar Component (from Shared JSON, mapped styles) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full h-14 px-4 bg-surface-card shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-green-soft text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="local_hospital">local_hospital</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AfyaQueue</span>
+<span class="bg-brand-blue-soft text-secondary font-overline text-overline px-1.5 py-0.5 rounded-full uppercase font-bold tracking-wider">MTRH</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="Notifications" class="flex items-center justify-center w-9 h-9 rounded-full text-brand-navy hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Screen Content Canvas -->
+<main class="max-w-md mx-auto px-margin pt-4 space-y-4">
+<!-- Page Header & Title Context -->
+<div class="flex items-center justify-between pt-1">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-brand-navy">My Profile &amp; Preferences</h1>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Moi Teaching and Referral Hospital Portal</p>
+</div>
+<div class="flex items-center gap-1 bg-brand-green-soft px-2.5 py-1 rounded-full border border-primary-container/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Sync Active</span>
+</div>
+</div>
+<!-- Patient Identity Card (Level 1 Surface) -->
+<section class="bg-surface-card rounded-xl p-4 border border-border-subtle shadow-[0_1px_3px_rgba(22,38,74,0.04)]">
+<div class="flex items-start gap-3.5">
+<!-- Avatar Placeholder -->
+<div class="relative flex-shrink-0">
+<div class="w-14 h-14 rounded-full bg-brand-blue-soft border-2 border-surface-card flex items-center justify-center text-secondary shadow-sm overflow-hidden">
+<span class="material-symbols-outlined text-[32px] text-secondary" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 bg-primary text-surface-card rounded-full p-0.5 shadow-sm border border-surface-card flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] font-bold" data-icon="verified">verified</span>
+</div>
+</div>
+<!-- Name & Badges -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md font-bold text-brand-navy truncate">Kevin Kibet</h2>
+<span class="bg-brand-green-soft text-primary px-2 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-0.5 font-bold">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle">check_circle</span>
+              Verified
+            </span>
+</div>
+<div class="mt-1 flex items-center gap-1.5">
+<span class="font-overline text-overline text-text-muted uppercase">Hospital File No</span>
+<span class="bg-surface-container px-2 py-0.5 rounded font-label-md text-label-md font-bold text-brand-navy font-mono">PT-2026-0142</span>
+</div>
+</div>
+</div>
+<!-- Contact Info Grid -->
+<div class="mt-3.5 pt-3 border-t border-border-subtle grid grid-cols-1 gap-2">
+<div class="flex items-center gap-2.5 text-text-muted">
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="call">call</span>
+<span class="font-body-sm text-body-sm text-brand-navy font-medium">+254 0712 345 678</span>
+<span class="ml-auto bg-brand-blue-soft text-secondary font-label-sm text-label-sm px-1.5 py-0.5 rounded">Primary Phone</span>
+</div>
+<div class="flex items-center gap-2.5 text-text-muted">
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="mail">mail</span>
+<span class="font-body-sm text-body-sm text-brand-navy font-medium truncate">kevin.kibet@example.com</span>
+</div>
+</div>
+<!-- Quick Action -->
+<div class="mt-3.5 pt-3 border-t border-border-subtle flex items-center justify-between">
+<button class="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-brand-blue-soft text-secondary font-label-md text-label-md font-bold hover:bg-secondary-fixed transition-colors active:scale-95 duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit_square">edit_square</span>
+          Edit Profile Info
+        </button>
+</div>
+</section>
+<!-- Real-time Queue Alerts & Notification Settings (FR-15, Part G.1) -->
+<section class="bg-surface-card rounded-xl p-4 border border-border-subtle shadow-[0_1px_3px_rgba(22,38,74,0.04)] space-y-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-md bg-brand-blue-soft flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="campaign">campaign</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-bold text-brand-navy">Queue Alerts &amp; Chimes</h3>
+<p class="font-body-sm text-body-sm text-text-muted">FR-15 Audio-Visual Broadcast Preferences</p>
+</div>
+</div>
+<span class="bg-brand-green-soft text-primary font-label-sm text-label-sm px-2 py-0.5 rounded-full font-bold">4 Active</span>
+</div>
+<!-- Setting 1: Audible Chime Alert -->
+<div class="pt-2 border-t border-border-subtle flex items-center justify-between gap-3">
+<div class="flex-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-brand-accent-rust" data-icon="volume_up">volume_up</span>
+<span class="font-label-lg text-label-lg font-bold text-brand-navy">Audible Chime Alert</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Play sound chime when turn is ≤ 2 patients ahead</p>
+</div>
+<!-- Toggle Switch ON -->
+<button aria-checked="true" class="w-12 h-6 flex items-center bg-primary rounded-full p-1 transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<div class="bg-surface-card w-4 h-4 rounded-full shadow-md transform translate-x-6 transition-transform duration-200"></div>
+</button>
+</div>
+<!-- Setting 2: Push Notifications -->
+<div class="pt-2 border-t border-border-subtle flex items-center justify-between gap-3">
+<div class="flex-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="notifications_active">notifications_active</span>
+<span class="font-label-lg text-label-lg font-bold text-brand-navy">Push Notifications</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Instant alerts when clinic status updates</p>
+</div>
+<!-- Toggle Switch ON -->
+<button aria-checked="true" class="w-12 h-6 flex items-center bg-primary rounded-full p-1 transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<div class="bg-surface-card w-4 h-4 rounded-full shadow-md transform translate-x-6 transition-transform duration-200"></div>
+</button>
+</div>
+<!-- Setting 3: SMS Queue Fallback -->
+<div class="pt-2 border-t border-border-subtle flex items-center justify-between gap-3">
+<div class="flex-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="sms">sms</span>
+<span class="font-label-lg text-label-lg font-bold text-brand-navy">SMS Queue Fallback</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Receive SMS if mobile data disconnects</p>
+</div>
+<!-- Toggle Switch ON -->
+<button aria-checked="true" class="w-12 h-6 flex items-center bg-primary rounded-full p-1 transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<div class="bg-surface-card w-4 h-4 rounded-full shadow-md transform translate-x-6 transition-transform duration-200"></div>
+</button>
+</div>
+<!-- Setting 4: Vibration & Full Screen Banner -->
+<div class="pt-2 border-t border-border-subtle flex items-center justify-between gap-3">
+<div class="flex-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="vibration">vibration</span>
+<span class="font-label-lg text-label-lg font-bold text-brand-navy">Vibration &amp; Full Screen Banner</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">High visibility alert when It's Your Turn</p>
+</div>
+<!-- Toggle Switch ON -->
+<button aria-checked="true" class="w-12 h-6 flex items-center bg-primary rounded-full p-1 transition-colors duration-200 focus:outline-none" role="switch" type="button">
+<div class="bg-surface-card w-4 h-4 rounded-full shadow-md transform translate-x-6 transition-transform duration-200"></div>
+</button>
+</div>
+</section>
+<!-- Offline & System Storage Status (Level 1 Surface) -->
+<section class="bg-surface-card rounded-xl p-4 border border-border-subtle shadow-[0_1px_3px_rgba(22,38,74,0.04)]">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-md bg-brand-green-soft flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="cloud_done">cloud_done</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-bold text-brand-navy">Offline Resilience</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Storage &amp; Local Sync Diagnostic</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 text-primary font-label-sm text-label-sm font-bold bg-brand-green-soft px-2 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          Active
+        </span>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border border-border-subtle mt-2 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5" data-icon="database">database</span>
+<div>
+<div class="font-label-md text-label-md font-bold text-brand-navy">Local Cache Persistence</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">
+            Firestore persistentLocalCache enabled for offline queue tracking. Real-time token updates remain visible in outpatient basement wings without cellular coverage.
+          </p>
+<div class="flex items-center gap-3 mt-2 text-text-muted font-label-sm text-label-sm">
+<span>Cache Size: 4.2 MB</span>
+<span>•</span>
+<span>Last Sync: 1 min ago</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Demo Role Switcher Section -->
+<section class="bg-surface-card rounded-xl p-4 border border-border-subtle shadow-[0_1px_3px_rgba(22,38,74,0.04)]">
+<div class="flex items-center gap-2 mb-1.5">
+<div class="w-7 h-7 rounded-md bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="swap_horiz">swap_horiz</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-bold text-brand-navy">Demo Role Switcher</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Switch App Perspective for demonstration</p>
+</div>
+</div>
+<!-- Segmented Perspective Control -->
+<div class="mt-3 p-1 bg-surface-container rounded-xl flex items-center gap-1 border border-border-subtle">
+<!-- Patient Portal (Selected) -->
+<button class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-surface-card text-brand-navy shadow-sm font-label-md text-label-md font-bold transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="person">person</span>
+          Patient Portal
+        </button>
+<!-- Staff Queue Desk (Unselected) -->
+<button class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md font-semibold transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="badge">badge</span>
+          Staff Queue Desk
+        </button>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-2 text-center">
+        Toggle to preview Room 4B Doctor Triage console &amp; ticket call buttons.
+      </p>
+</section>
+<!-- Danger & Account Actions -->
+<section class="pt-2 pb-2">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-error-container text-status-danger font-label-lg text-label-lg font-bold border border-error/20 hover:bg-error/10 active:scale-95 transition-all duration-150 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+        Sign Out of AfyaQueue
+      </button>
+<div class="text-center mt-3">
+<span class="font-label-sm text-label-sm text-text-muted">Moi Teaching and Referral Hospital • v2.4.1 (Build 2026)</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component (Exact Shared JSON logic: Profile active) -->
+<nav class="fixed bottom-0 left-0 w-full h-14 z-50 flex justify-around items-center px-margin bg-surface-card shadow-md">
+<!-- Item 0: Live Queue -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="confirmation_number">confirmation_number</span>
+<span>Live Queue</span>
+</a>
+<!-- Item 1: Book -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_month">calendar_month</span>
+<span>Book</span>
+</a>
+<!-- Item 2: Records -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="medical_services">medical_services</span>
+<span>Records</span>
+</a>
+<!-- Item 3: Desk -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="clinical_notes">clinical_notes</span>
+<span>Desk</span>
+</a>
+<!-- Item 4: Profile (ACTIVE STATE as per JSON style_active_navigation) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-sm text-label-sm gap-0.5 active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px] font-bold" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-bold">Profile</span>
+</a>
+</nav>
+<!-- Interactive script for demo toggles & role switchers -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle switches micro-interaction
+      const switches = document.querySelectorAll('button[role="switch"]');
+      switches.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isChecked = btn.getAttribute('aria-checked') === 'true';
+          const knob = btn.querySelector('div');
+          if (isChecked) {
+            btn.setAttribute('aria-checked', 'false');
+            btn.classList.remove('bg-primary');
+            btn.classList.add('bg-outline-variant');
+            knob.classList.remove('translate-x-6');
+            knob.classList.add('translate-x-0');
+          } else {
+            btn.setAttribute('aria-checked', 'true');
+            btn.classList.add('bg-primary');
+            btn.classList.remove('bg-outline-variant');
+            knob.classList.add('translate-x-6');
+            knob.classList.remove('translate-x-0');
+          }
+        });
+      });
+    });
+  </script>
+</body></html>

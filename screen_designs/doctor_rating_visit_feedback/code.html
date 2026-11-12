@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue - Rate Consultation</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#360f00",
+            "surface-card": "#FFFFFF",
+            "on-tertiary": "#ffffff",
+            "secondary": "#2e58bd",
+            "status-danger": "#DC2626",
+            "on-secondary-fixed": "#00174a",
+            "brand-navy": "#16264A",
+            "text-muted": "#64748B",
+            "on-primary-container": "#adffc2",
+            "on-secondary-container": "#002c7c",
+            "surface-tint": "#066d3a",
+            "surface": "#f7f9fb",
+            "primary-container": "#1e7a46",
+            "secondary-fixed": "#dbe1ff",
+            "outline-variant": "#bec9be",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "secondary-container": "#7297ff",
+            "outline": "#6f7a70",
+            "surface-variant": "#e0e3e5",
+            "surface-bright": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "surface-dim": "#d8dadc",
+            "tertiary-container": "#b6480b",
+            "surface-container": "#eceef0",
+            "brand-accent-rust": "#C1541A",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed-dim": "#ffb597",
+            "error-container": "#ffdad6",
+            "brand-blue-soft": "#EBF1FF",
+            "on-primary-fixed-variant": "#00522a",
+            "on-surface": "#191c1e",
+            "primary-fixed": "#9df6b6",
+            "inverse-surface": "#2d3133",
+            "surface-container-highest": "#e0e3e5",
+            "inverse-primary": "#81d99b",
+            "surface-container-low": "#f2f4f6",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed": "#00210d",
+            "brand-green-soft": "#E6F4EC",
+            "on-surface-variant": "#3f4940",
+            "on-tertiary-container": "#ffe8df",
+            "primary": "#006032",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary": "#F27438",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#81d99b",
+            "error": "#ba1a1a",
+            "border-subtle": "#E2E8F0",
+            "on-secondary-fixed-variant": "#063fa4",
+            "background": "#f7f9fb",
+            "gold-star": "#F59E0B"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-2xl": "3rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "gutter-sm": "0.75rem",
+            "gutter": "1rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "margin-md": "1.5rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { lineHeight: "64px", letterSpacing: "-0.03em", fontWeight: "800" }],
+            "display-giant-mobile": ["44px", { lineHeight: "52px", letterSpacing: "-0.025em", fontWeight: "800" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "700" }],
+            "headline-xl": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["22px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-xl-mobile": ["26px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }],
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            "overline": ["10px", { lineHeight: "12px", letterSpacing: "0.08em", fontWeight: "800" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-brand-navy min-h-screen font-body-md text-on-surface antialiased flex flex-col justify-end items-center relative overflow-hidden">
+<!-- Underlying Screen Backdrop Simulation (Live Queue context behind the modal) -->
+<div class="absolute inset-0 z-0 flex flex-col opacity-25 filter blur-[2px] pointer-events-none select-none bg-surface">
+<!-- Simulated TopAppBar -->
+<header class="flex items-center justify-between w-full h-14 px-4 bg-surface-card border-b border-border-subtle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="local_hospital">local_hospital</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">AfyaQueue</span>
+</div>
+<span class="material-symbols-outlined text-text-muted" data-icon="notifications">notifications</span>
+</header>
+<!-- Background Queue Summary Content -->
+<main class="p-4 flex flex-col items-center gap-4">
+<div class="w-full bg-brand-green-soft border border-primary-container p-4 rounded-xl flex items-center justify-between">
+<div>
+<div class="font-label-sm text-primary uppercase">Moi Teaching &amp; Referral Hospital</div>
+<div class="font-headline-md text-brand-navy font-bold">Consultation Finished</div>
+</div>
+<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="check_circle">check_circle</span>
+</div>
+<div class="w-44 h-44 rounded-full border-4 border-secondary flex flex-col items-center justify-center bg-brand-blue-soft my-6">
+<span class="font-overline text-overline text-secondary">YOUR NUMBER</span>
+<span class="font-display-giant-mobile text-display-giant-mobile text-brand-navy font-extrabold">18</span>
+<span class="font-body-sm text-body-sm text-text-muted">Completed</span>
+</div>
+</main>
+</div>
+<!-- Dimmed Scrim Overlay -->
+<div class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-10 transition-opacity"></div>
+<!-- Bottom-Sheet Modal Presentation (FR-17 Part G.3 Feedback Flow) -->
+<section class="relative z-20 w-full max-w-md bg-surface-card rounded-t-[1.75rem] shadow-2xl border-t border-border-subtle max-h-[813px] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300">
+<!-- Drag Handle Indicator Bar -->
+<div class="w-full pt-3 pb-2 flex justify-center cursor-grab active:cursor-grabbing bg-surface-card">
+<div class="w-12 h-1.5 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Context Header & Close Action -->
+<header class="px-5 pt-1 pb-3 flex items-start justify-between border-b border-border-subtle/80 bg-surface-card">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5 text-primary mb-0.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-overline text-overline tracking-wider uppercase font-bold">Completed Outpatient Consultation</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-brand-navy font-bold leading-tight">Rate Your Visit &amp; Doctor</h1>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">Verified Visit • Moi Teaching and Referral Hospital</p>
+</div>
+<button aria-label="Close feedback modal" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-text-muted hover:text-brand-navy active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</header>
+<!-- Scrollable Modal Content Canvas -->
+<div class="overflow-y-auto px-5 py-4 space-y-4 flex-1">
+<!-- Clinician Summary Card -->
+<article class="bg-surface rounded-xl p-3.5 border border-border-subtle flex items-center gap-3.5 shadow-sm">
+<div class="relative w-12 h-12 flex-shrink-0">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-surface-card shadow-xs" data-alt="Professional clinical headshot of Dr. Sarah Wanjiku, a compassionate female African physician wearing a pristine white doctor coat with a stethoscope over her shoulders, set against a soft, bright, modern clinical hospital background at Moi Teaching and Referral Hospital in warm ambient medical lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANwzH2x8vlUNfBLbRPliuMegoT6duRjzC-u9Xrpzg7VLzwx51m5Xz6q8XbkivJZHwB91ucn4OmMc2w8fOFfGnd1Kz5dBcmGVF_8-tUunoc1BFpCVSjSVBFA2ycVaOFwO6k61hYpW17eGjNUgC9X3qnCEJgL2pdcPKP4vv2LKHc5-4VwPUcVDywSftG-DKmaoVwHAzR3tC9RcRZy8I4DH4_y28BCTRHjhA9DnI8BgzH"/>
+<div class="absolute -bottom-0.5 -right-0.5 bg-primary-container text-white w-4 h-4 rounded-full flex items-center justify-center border-2 border-surface-card" title="Verified Physician">
+<span class="material-symbols-outlined text-[10px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-brand-navy font-bold truncate">Dr. Sarah Wanjiku</h2>
+<span class="px-2 py-0.5 bg-brand-green-soft text-primary font-label-sm text-label-sm rounded-full flex items-center gap-1 font-semibold flex-shrink-0">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Room 14
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted">General Medicine • OPD Clinic</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-brand-navy font-semibold bg-surface-card px-2 py-0.5 rounded border border-border-subtle inline-block">
+              Token #18
+            </span>
+<span class="font-body-sm text-body-sm text-text-muted truncate">Today, 22 Sep 2026</span>
+</div>
+</div>
+</article>
+<!-- Interactive 5-Star Rating Component -->
+<section class="bg-surface-card rounded-xl p-4 border border-border-subtle text-center flex flex-col items-center">
+<span class="font-overline text-overline uppercase tracking-wider text-secondary font-bold mb-1">DOCTOR &amp; CARE RATING</span>
+<div aria-label="Select doctor rating out of 5 stars" class="flex items-center justify-center gap-2 my-1" role="radiogroup">
+<button aria-label="Rate 1 star" class="text-gold-star hover:scale-110 active:scale-95 transition-transform focus:outline-hidden" type="button">
+<span class="material-symbols-outlined text-[36px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="Rate 2 stars" class="text-gold-star hover:scale-110 active:scale-95 transition-transform focus:outline-hidden" type="button">
+<span class="material-symbols-outlined text-[36px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="Rate 3 stars" class="text-gold-star hover:scale-110 active:scale-95 transition-transform focus:outline-hidden" type="button">
+<span class="material-symbols-outlined text-[36px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="Rate 4 stars" class="text-gold-star hover:scale-110 active:scale-95 transition-transform focus:outline-hidden" type="button">
+<span class="material-symbols-outlined text-[36px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="Rate 5 stars" class="text-gold-star hover:scale-110 active:scale-95 transition-transform focus:outline-hidden" type="button">
+<span class="material-symbols-outlined text-[36px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+<!-- Feedback Descriptor Pill (Selected state for 5/5) -->
+<div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-brand-green-soft text-primary-container rounded-full border border-primary-fixed">
+<span class="material-symbols-outlined text-[14px]" data-icon="thumb_up" style="font-variation-settings: 'FILL' 1;">thumb_up</span>
+<span class="font-label-md text-label-md font-bold">5.0 • Excellent Care &amp; Clear Instructions</span>
+</div>
+</section>
+<!-- Dynamic Quick-Feedback Tags (Multi-select Chips) -->
+<section class="space-y-2">
+<label class="font-label-md text-label-md font-bold text-brand-navy block">
+          What went well during this visit?
+        </label>
+<div class="flex flex-wrap gap-2">
+<!-- Selected Tag 1 -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white text-label-sm font-label-sm shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Minimal Wait Time (&lt;15m)</span>
+</button>
+<!-- Selected Tag 2 -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white text-label-sm font-label-sm shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Attentive &amp; Thorough</span>
+</button>
+<!-- Selected Tag 3 -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white text-label-sm font-label-sm shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Clear Medication Guidance</span>
+</button>
+<!-- Selected Tag 4 -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white text-label-sm font-label-sm shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Clean Consultation Room</span>
+</button>
+<!-- Selected Tag 5 -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white text-label-sm font-label-sm shadow-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Polite Front Desk</span>
+</button>
+</div>
+</section>
+<!-- Written Review & Feedback Text Area -->
+<section class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md font-bold text-brand-navy" for="review-notes">
+            Doctor Consultation &amp; Queue Feedback
+          </label>
+<span class="font-body-sm text-body-sm text-text-muted">95/300</span>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-card border border-border-subtle rounded-xl p-3 text-brand-navy font-body-md text-body-md focus:border-secondary focus:ring-3 focus:ring-secondary/15 outline-hidden transition-all resize-none" id="review-notes" placeholder="Share any details about your triage, queue experience, or doctor consultation..." rows="3">Dr. Sarah Wanjiku listened carefully, clearly explained my diagnostic results, and queue movement was fast today.</textarea>
+</div>
+</section>
+<!-- Anonymous Sharing Checkbox -->
+<div class="flex items-start gap-2.5 pt-1">
+<input checked="" class="mt-0.5 h-4 w-4 rounded border-border-subtle text-primary focus:ring-primary/20 accent-primary cursor-pointer" id="anon-opt" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-brand-navy select-none cursor-pointer" for="anon-opt">
+<span class="font-semibold">Share anonymously</span> with MTRH Quality Assurance &amp; Clinical Directorate
+        </label>
+</div>
+<!-- MTRH Quality Care Guarantee Seal -->
+<div class="bg-surface rounded-xl p-2.5 border border-border-subtle flex items-center gap-2.5 text-text-muted">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<p class="font-body-sm text-body-sm leading-snug">
+<strong class="text-brand-navy font-semibold">MTRH Quality Assurance Seal:</strong> Reviews directly benchmark physician service velocity &amp; clinical adherence under Kenya Ministry of Health standards.
+        </p>
+</div>
+</div>
+<!-- Fixed Bottom Sticky Actions -->
+<footer class="p-4 bg-surface-card border-t border-border-subtle shadow-md flex flex-col gap-2">
+<!-- Primary Orange CTA (#F27438) -->
+<button class="w-full h-12 bg-tertiary hover:bg-brand-accent-rust text-on-tertiary font-label-lg text-label-lg font-bold rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+        Submit Verified Review
+      </button>
+<!-- Secondary Skip Action -->
+<button class="w-full h-10 bg-transparent text-text-muted hover:text-brand-navy font-label-md text-label-md font-semibold rounded-xl flex items-center justify-center transition-colors" type="button">
+        Skip for now
+      </button>
+</footer>
+</section>
+</body></html>

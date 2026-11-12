@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue - Patient Medical Records & Prescriptions</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#360f00",
+            "surface-card": "#FFFFFF",
+            "on-tertiary": "#ffffff",
+            "secondary": "#2e58bd",
+            "status-danger": "#DC2626",
+            "on-secondary-fixed": "#00174a",
+            "brand-navy": "#16264A",
+            "text-muted": "#64748B",
+            "on-primary-container": "#adffc2",
+            "on-secondary-container": "#002c7c",
+            "surface-tint": "#066d3a",
+            "surface": "#f7f9fb",
+            "primary-container": "#1e7a46",
+            "secondary-fixed": "#dbe1ff",
+            "outline-variant": "#bec9be",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "secondary-container": "#7297ff",
+            "outline": "#6f7a70",
+            "surface-variant": "#e0e3e5",
+            "surface-bright": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "surface-dim": "#d8dadc",
+            "tertiary-container": "#b6480b",
+            "surface-container": "#eceef0",
+            "brand-accent-rust": "#C1541A",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed-dim": "#ffb597",
+            "error-container": "#ffdad6",
+            "brand-blue-soft": "#EBF1FF",
+            "on-primary-fixed-variant": "#00522a",
+            "on-surface": "#191c1e",
+            "primary-fixed": "#9df6b6",
+            "inverse-surface": "#2d3133",
+            "surface-container-highest": "#e0e3e5",
+            "inverse-primary": "#81d99b",
+            "surface-container-low": "#f2f4f6",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed": "#00210d",
+            "brand-green-soft": "#E6F4EC",
+            "on-surface-variant": "#3f4940",
+            "on-tertiary-container": "#ffe8df",
+            "primary": "#006032",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary": "#913500",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#81d99b",
+            "error": "#ba1a1a",
+            "border-subtle": "#E2E8F0",
+            "on-secondary-fixed-variant": "#063fa4",
+            "background": "#f7f9fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-2xl": "3rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "gutter-sm": "0.75rem",
+            "gutter": "1rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "margin-md": "1.5rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-brand-navy min-h-screen antialiased flex flex-col justify-between selection:bg-brand-blue-soft selection:text-secondary">
+<!-- Mobile Viewport Frame / Central Container -->
+<div class="w-full max-w-md mx-auto min-h-screen flex flex-col bg-background pb-20">
+<!-- Top App Bar (Shared Anchor Blueprint Implementation) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full h-14 px-4 bg-surface-card shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="local_hospital">local_hospital</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">AfyaQueue</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container active:scale-95 transition-all text-text-muted">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Sub-Header Context Area -->
+<section class="bg-surface-card px-4 pt-3 pb-4 shadow-sm border-b border-border-subtle">
+<div class="flex items-center justify-between mb-3">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-brand-navy font-bold tracking-tight">Medical Records</h1>
+<div class="inline-flex items-center gap-1.5 mt-1 px-2.5 py-0.5 rounded-full bg-brand-green-soft border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container text-xs" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-md text-label-md text-primary-container font-semibold">Kevin Kibet • PT-2026-0142</span>
+</div>
+</div>
+<button class="flex items-center gap-1 px-3 py-2 bg-brand-blue-soft text-secondary rounded-xl font-label-md text-label-md font-bold hover:bg-secondary/15 active:scale-95 transition-transform" title="Export Health Record">
+<span class="material-symbols-outlined text-base" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</div>
+<!-- Segmented Sub-Navigation Bar -->
+<nav class="flex p-1 bg-surface-container-low rounded-xl gap-1">
+<button class="flex-1 py-2 text-center rounded-lg bg-surface-card text-brand-navy font-label-md text-label-md font-bold shadow-xs border border-border-subtle transition-all">
+          Prescriptions & Tokens
+        </button>
+<button class="flex-1 py-2 text-center rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md font-medium transition-colors">
+          Clinical Notes
+        </button>
+<button class="flex-1 py-2 text-center rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md font-medium transition-colors">
+          Lab & Vitals
+        </button>
+</nav>
+</section>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-4 space-y-4">
+<!-- SECTION 1: Active Linked Visit & Pharmacy Token Card -->
+<section class="bg-surface-card rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+<!-- Header Ribbon: Encounter Reference -->
+<div class="bg-brand-blue-soft/70 px-4 py-2.5 border-b border-border-subtle flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="link" style="font-variation-settings: 'FILL' 1;">link</span>
+<span class="font-label-md text-label-md font-bold text-brand-navy">Today's Visit • Token #18</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted">Dr. Sarah Wanjiku</span>
+</div>
+<div class="p-4 space-y-4">
+<!-- Dispense Token Badge -->
+<div class="flex items-start justify-between bg-surface-container-low p-3.5 rounded-xl border border-border-subtle">
+<div>
+<div class="flex items-center gap-1.5 mb-1">
+<span class="font-overline text-overline uppercase tracking-wider text-secondary font-bold">PHARMACY DISPENSE TOKEN</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-brand-green-soft text-primary-container">
+                  READY FOR PICKUP
+                </span>
+</div>
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-extrabold text-brand-navy">
+                Rx Token #PH-18
+              </div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-text-muted" data-icon="location_on">location_on</span>
+                Central Pharmacy Window 3
+              </p>
+</div>
+<div class="w-12 h-12 rounded-xl bg-brand-green-soft text-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-2xl" data-icon="medication">medication</span>
+</div>
+</div>
+<!-- Prescribed Medication Items List -->
+<div>
+<h2 class="font-label-md text-label-md font-bold text-brand-navy mb-2.5 flex items-center justify-between">
+<span>Prescribed Medication (2 items)</span>
+<span class="font-body-sm text-body-sm text-text-muted font-normal">MTRH Outpatient Formulary</span>
+</h2>
+<div class="space-y-2">
+<!-- Drug 1 -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle flex items-center justify-between">
+<div class="flex items-start gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-brand-blue-soft text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-base" data-icon="pill">pill</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-brand-navy">Amoxicillin 500mg</h3>
+<p class="font-body-sm text-body-sm text-text-muted">1 capsule three times daily (tid) • 7 days</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold bg-brand-green-soft px-2 py-0.5 rounded-full">
+                  Dispensed
+                </span>
+</div>
+<!-- Drug 2 -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle flex items-center justify-between">
+<div class="flex items-start gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-brand-blue-soft text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-base" data-icon="vaccines">vaccines</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-brand-navy">Paracetamol 1g</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Take as needed for pain/fever (prn) • 10 tabs</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold bg-brand-green-soft px-2 py-0.5 rounded-full">
+                  Dispensed
+                </span>
+</div>
+</div>
+</div>
+<!-- Real-Time Telemetry Bar -->
+<div class="p-3.5 bg-brand-blue-soft rounded-xl border border-secondary-fixed flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative flex items-center justify-center">
+<span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-brand-navy">Window 3 Serving: #14</p>
+<p class="font-body-sm text-body-sm text-secondary font-medium">4 patients ahead • Est. 8 mins wait</p>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-secondary text-surface-card rounded-lg font-label-sm text-label-sm font-bold shadow-xs active:scale-95 transition-transform">
+              Track Desk
+            </button>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Triage Vitals History Bento -->
+<section class="bg-surface-card rounded-xl border border-border-subtle p-4 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="monitor_heart">monitor_heart</span>
+<h2 class="font-headline-md text-headline-md font-bold text-brand-navy">Triage Vitals Check</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-text-muted font-medium">Station #4 • Today</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Metric 1: Blood Pressure -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle">
+<span class="font-overline text-overline uppercase text-text-muted block">Blood Pressure</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-brand-navy">118/76</span>
+<span class="font-label-sm text-label-sm text-text-muted">mmHg</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold mt-1 inline-flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span> Normal
+            </span>
+</div>
+<!-- Metric 2: Pulse -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle">
+<span class="font-overline text-overline uppercase text-text-muted block">Heart Rate</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-brand-navy">72</span>
+<span class="font-label-sm text-label-sm text-text-muted">bpm</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold mt-1 inline-flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span> Resting
+            </span>
+</div>
+<!-- Metric 3: Temperature -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle">
+<span class="font-overline text-overline uppercase text-text-muted block">Body Temp</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-brand-navy">36.8</span>
+<span class="font-label-sm text-label-sm text-text-muted">°C</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold mt-1 inline-flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span> Afebrile
+            </span>
+</div>
+<!-- Metric 4: BMI -->
+<div class="p-3 bg-surface rounded-xl border border-border-subtle">
+<span class="font-overline text-overline uppercase text-text-muted block">Body Mass Index</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-brand-navy">22.4</span>
+<span class="font-label-sm text-label-sm text-text-muted">kg/m²</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold mt-1 inline-flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span> Healthy
+            </span>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Historical Consultations & Diagnostic Records -->
+<section class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-md text-headline-md font-bold text-brand-navy">Past Consultations</h2>
+<button class="font-label-md text-label-md font-bold text-secondary flex items-center gap-0.5 hover:underline">
+<span>Filter</span>
+<span class="material-symbols-outlined text-sm" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- Historical Record Card 1 -->
+<article class="bg-surface-card rounded-xl border border-border-subtle p-4 shadow-sm space-y-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-container font-bold text-sm shrink-0 border border-border-subtle">
+<span class="material-symbols-outlined text-lg" data-icon="dentistry">dentistry</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-brand-navy">Dr. Amina Hassan</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Dental Surgery • 14 Aug 2026</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container bg-brand-green-soft px-2.5 py-1 rounded-full font-semibold">
+              Completed
+            </span>
+</div>
+<div class="p-3 bg-surface rounded-xl border border-border-subtle space-y-2">
+<div>
+<span class="font-overline text-overline uppercase text-text-muted block">Diagnosis & Procedure</span>
+<p class="font-body-sm text-body-sm text-brand-navy font-medium mt-0.5">
+                Routine prophylaxis & cavity sealed on lower right second premolar.
+              </p>
+</div>
+<div class="flex items-center gap-2 pt-1 border-t border-border-subtle">
+<span class="material-symbols-outlined text-primary-container text-sm" data-icon="check">check</span>
+<span class="font-body-sm text-body-sm text-text-muted">Prescription dispensed: Chlorhexidine rinse</span>
+</div>
+</div>
+<div class="flex items-center justify-end pt-1">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-blue-soft text-secondary font-label-md text-label-md font-bold hover:bg-secondary/15 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+<span>Download Clinical Slip (PDF)</span>
+</button>
+</div>
+</article>
+<!-- Historical Record Card 2 (Quick Summary) -->
+<article class="bg-surface-card rounded-xl border border-border-subtle p-3.5 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-brand-blue-soft flex items-center justify-center text-secondary font-bold text-sm shrink-0">
+<span class="material-symbols-outlined text-lg" data-icon="ophthalmology">ophthalmology</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md font-bold text-brand-navy">Dr. Patrick Omondi</h3>
+<p class="font-body-sm text-body-sm text-text-muted">Optometry Clinic • 22 Jun 2026</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-text-muted hover:text-brand-navy">
+<span class="material-symbols-outlined text-base" data-icon="chevron_right">chevron_right</span>
+</button>
+</article>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shared Anchor Blueprint Implementation) -->
+<!-- Maps directly to: ["Live Queue", "Book", "Records", "Desk", "Profile"] -->
+<!-- Current Page represents "Records" -> 'Records' tab is strictly ACTIVE -->
+<nav class="fixed bottom-0 left-0 w-full h-14 z-50 flex justify-around items-center px-margin bg-surface-card shadow-md">
+<!-- Destination 1: Live Queue -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 transition-transform duration-150" href="#queue">
+<span class="material-symbols-outlined text-xl" data-icon="confirmation_number">confirmation_number</span>
+<span>Live Queue</span>
+</a>
+<!-- Destination 2: Book -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 transition-transform duration-150" href="#book">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_month">calendar_month</span>
+<span>Book</span>
+</a>
+<!-- Destination 3: Records (ACTIVE SELECTION) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-sm text-label-sm gap-0.5 active:scale-95 transition-transform duration-150" href="#records">
+<span class="material-symbols-outlined text-xl text-primary" data-icon="medical_services" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-bold text-primary">Records</span>
+</a>
+<!-- Destination 4: Desk -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 transition-transform duration-150" href="#desk">
+<span class="material-symbols-outlined text-xl" data-icon="clinical_notes">clinical_notes</span>
+<span>Desk</span>
+</a>
+<!-- Destination 5: Profile -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors active:scale-95 transition-transform duration-150" href="#profile">
+<span class="material-symbols-outlined text-xl" data-icon="account_circle">account_circle</span>
+<span>Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

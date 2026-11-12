@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Doctor Detail & Dynamic Slot Booking - AfyaQueue</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#191c1e",
+            "on-secondary-fixed-variant": "#063fa4",
+            "on-primary": "#ffffff",
+            "secondary-container": "#7297ff",
+            "status-danger": "#DC2626",
+            "background": "#f7f9fb",
+            "primary-fixed-dim": "#81d99b",
+            "inverse-primary": "#81d99b",
+            "surface-bright": "#f7f9fb",
+            "tertiary-fixed": "#ffdbcd",
+            "brand-accent-rust": "#C1541A",
+            "brand-cta-orange": "#F27438",
+            "inverse-surface": "#2d3133",
+            "secondary": "#2e58bd",
+            "primary-container": "#1e7a46",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#b3c5ff",
+            "tertiary": "#913500",
+            "on-primary-container": "#adffc2",
+            "text-muted": "#64748B",
+            "error-container": "#ffdad6",
+            "surface-container": "#eceef0",
+            "outline": "#6f7a70",
+            "on-tertiary-fixed": "#360f00",
+            "on-surface-variant": "#3f4940",
+            "on-primary-fixed-variant": "#00522a",
+            "outline-variant": "#bec9be",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#066d3a",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffe8df",
+            "surface-container-low": "#f2f4f6",
+            "border-subtle": "#E2E8F0",
+            "brand-green-soft": "#E6F4EC",
+            "primary": "#006032",
+            "on-secondary-fixed": "#00174a",
+            "surface-variant": "#e0e3e5",
+            "surface": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b6480b",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-card": "#FFFFFF",
+            "brand-blue-soft": "#EBF1FF",
+            "secondary-fixed": "#dbe1ff",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "brand-navy": "#16264A",
+            "on-secondary-container": "#002c7c",
+            "primary-fixed": "#9df6b6",
+            "tertiary-fixed-dim": "#ffb597",
+            "on-primary-fixed": "#00210d",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-sm": "0.75rem",
+            "margin": "1rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "margin-md": "1.5rem",
+            "space-2xl": "3rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-brand-navy min-h-screen antialiased selection:bg-brand-blue-soft selection:text-secondary flex justify-center">
+<!-- Mobile Max Container with Responsive Elevation -->
+<div class="w-full max-w-md bg-background min-h-screen flex flex-col relative pb-28">
+<!-- Top Navigation Header (Screen 2 Context: Back, Share, Favorite) -->
+<header class="sticky top-0 z-40 bg-surface-card/95 backdrop-blur-md px-margin h-14 flex items-center justify-between border-b border-border-subtle shadow-sm">
+<button class="flex items-center gap-1.5 text-brand-navy active:scale-95 transition-transform duration-150 py-1 pr-2 -ml-1" onclick="history.back()">
+<span class="material-symbols-outlined text-xl" data-icon="arrow_back">arrow_back</span>
+<span class="font-headline-md text-label-lg font-semibold tracking-tight">Doctor Profile</span>
+</button>
+<div class="flex items-center gap-1">
+<button aria-label="Share profile" class="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-brand-navy hover:bg-surface-container transition-colors active:scale-95">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+</button>
+<button aria-label="Save doctor" class="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-error hover:bg-surface-container transition-colors active:scale-95" id="favorite-btn" onclick="toggleFavorite()">
+<span class="material-symbols-outlined text-xl text-rose-500" data-icon="favorite" id="fav-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin pt-space-md space-y-space-md">
+<!-- Doctor Profile Header Card -->
+<section class="bg-surface-card rounded-xl border border-border-subtle p-space-md shadow-[0_1px_3px_rgba(22,38,74,0.04)] relative overflow-hidden">
+<!-- Top Accent Bar -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-primary-container"></div>
+<div class="flex items-start gap-space-md">
+<!-- Avatar Stethoscope Frame with Verified Shield -->
+<div class="relative shrink-0">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-blue-soft bg-surface-container-low flex items-center justify-center shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of Dr. Sarah Wanjiku, an African female senior doctor wearing a white clinical coat and a navy blue stethoscope, smiling warm and confident in a brightly lit modern hospital corridor at Moi Teaching Hospital with clinical green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB87zTY18do6BVxmCr6cFQ57EGzbcCznxop4QjQYkIfm6lRWVaIwMdJ5CuUCs_WC3I-_pNXxDftCvgdMO14AnAhBmE1MmuXAK9X57JP9WLKN6feG9cMlZUFAhSPz6lsJ-WQsDjCg3r5LjVALCFAkuonvVcU2TD_HIN4qtK9uhf_t1rolqD0uuyMNR_1ZzCGZkQ8nx7T1V_hOBfrFYM3MXi8mo2S9FFUsjM-Jn5Cxyhl"/>
+</div>
+<span class="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-0.5 border-2 border-surface-card flex items-center justify-center shadow-sm" title="Verified Practitioner">
+<span class="material-symbols-outlined text-[13px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<!-- Doctor Metadata -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h1 class="font-headline-md text-headline-md font-bold text-brand-navy truncate">Dr. Sarah Wanjiku</h1>
+</div>
+<p class="font-label-md text-label-md text-secondary font-semibold mt-0.5">Senior Consultant - General Medicine</p>
+<div class="flex items-center gap-1 text-text-muted mt-1 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span class="truncate">Moi Teaching Hospital, Wing B, Room 14</span>
+</div>
+</div>
+</div>
+<!-- Rating, Experience and Availability Status Row -->
+<div class="mt-space-md pt-3 border-t border-border-subtle flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-brand-navy">
+<span class="material-symbols-outlined text-amber-500 text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold">4.9</span>
+<span class="text-text-muted font-normal">(128 reviews) • 8 yrs exp</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-green-soft text-primary-container font-label-sm text-label-sm font-bold border border-primary-container/20">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Available today
+          </span>
+</div>
+<!-- Consultation Fee Pill Banner -->
+<div class="mt-3 bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between border border-border-subtle">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-md bg-brand-blue-soft flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-base" data-icon="payments">payments</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted">Consultation Fee</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-brand-navy">KSh 500</span>
+</div>
+</section>
+<!-- Date Selector Strip -->
+<section class="space-y-2">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-label-lg font-bold text-brand-navy">Select Date</h2>
+<span class="font-body-sm text-body-sm text-secondary font-semibold">September 2026</span>
+</div>
+<!-- Horizontal Scrollable Date Ribbon -->
+<div class="flex items-center gap-space-sm overflow-x-auto no-scrollbar py-1 -mx-margin px-margin">
+<!-- Mon 22 Sep (Selected - Filled Royal Blue) -->
+<button aria-selected="true" class="shrink-0 flex flex-col items-center justify-center w-[72px] h-[78px] rounded-xl bg-secondary text-white shadow-sm ring-2 ring-secondary ring-offset-2 ring-offset-background transition-all">
+<span class="font-label-sm text-overline uppercase opacity-90 tracking-wider">Mon</span>
+<span class="font-headline-lg text-headline-lg font-bold">22</span>
+<span class="font-label-sm text-label-sm opacity-90">Sep</span>
+</button>
+<!-- Tue 23 Sep -->
+<button aria-selected="false" class="shrink-0 flex flex-col items-center justify-center w-[72px] h-[78px] rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary/40 transition-colors">
+<span class="font-label-sm text-overline uppercase text-text-muted tracking-wider">Tue</span>
+<span class="font-headline-lg text-headline-lg font-bold text-brand-navy">23</span>
+<span class="font-label-sm text-label-sm text-text-muted">Sep</span>
+</button>
+<!-- Wed 24 Sep -->
+<button aria-selected="false" class="shrink-0 flex flex-col items-center justify-center w-[72px] h-[78px] rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary/40 transition-colors">
+<span class="font-label-sm text-overline uppercase text-text-muted tracking-wider">Wed</span>
+<span class="font-headline-lg text-headline-lg font-bold text-brand-navy">24</span>
+<span class="font-label-sm text-label-sm text-text-muted">Sep</span>
+</button>
+<!-- Thu 25 Sep -->
+<button aria-selected="false" class="shrink-0 flex flex-col items-center justify-center w-[72px] h-[78px] rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary/40 transition-colors">
+<span class="font-label-sm text-overline uppercase text-text-muted tracking-wider">Thu</span>
+<span class="font-headline-lg text-headline-lg font-bold text-brand-navy">25</span>
+<span class="font-label-sm text-label-sm text-text-muted">Sep</span>
+</button>
+<!-- Fri 26 Sep -->
+<button aria-selected="false" class="shrink-0 flex flex-col items-center justify-center w-[72px] h-[78px] rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary/40 transition-colors">
+<span class="font-label-sm text-overline uppercase text-text-muted tracking-wider">Fri</span>
+<span class="font-headline-lg text-headline-lg font-bold text-brand-navy">26</span>
+<span class="font-label-sm text-label-sm text-text-muted">Sep</span>
+</button>
+</div>
+</section>
+<!-- Time Slot Selection Section -->
+<section class="space-y-space-sm">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md font-bold text-brand-navy">Available Time Slots</h2>
+<span class="font-label-sm text-label-sm text-text-muted flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+              9 slots total
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted">Select an open slot for Mon, 22 Sep</p>
+</div>
+<!-- Dynamic Slot Filter Pill Indicator -->
+<div class="flex items-center justify-between py-1 px-2.5 rounded-lg bg-surface-container-low border border-border-subtle">
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-text-muted">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="info">info</span>
+<span>Booked slots are automatically hidden or locked</span>
+</div>
+<span class="font-label-sm text-overline uppercase tracking-wider text-secondary font-bold">LIVE SYNC</span>
+</div>
+<!-- Time Slot 3-column Grid -->
+<div class="grid grid-cols-3 gap-space-sm pt-1">
+<!-- 09:00 AM (Booked - Disabled/Grayed out with strike) -->
+<button class="h-12 rounded-xl bg-surface-container border border-border-subtle text-text-muted/60 flex items-center justify-center gap-1 cursor-not-allowed relative overflow-hidden group" disabled="">
+<span class="font-label-lg text-label-md line-through">09:00 AM</span>
+<span class="material-symbols-outlined text-xs text-text-muted/50" data-icon="lock">lock</span>
+</button>
+<!-- 09:30 AM (Selected with bold border and checkmark) -->
+<button class="h-12 rounded-xl bg-brand-green-soft border-2 border-primary-container text-primary-container font-bold flex items-center justify-center gap-1.5 shadow-[0_2px_4px_-2px_rgba(22,38,74,0.05)] ring-1 ring-primary-container/20">
+<span class="font-label-lg text-label-lg">09:30 AM</span>
+<span class="material-symbols-outlined text-base" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<!-- 10:00 AM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">10:00 AM</span>
+</button>
+<!-- 10:30 AM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">10:30 AM</span>
+</button>
+<!-- 11:00 AM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">11:00 AM</span>
+</button>
+<!-- 11:30 AM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">11:30 AM</span>
+</button>
+<!-- 02:00 PM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">02:00 PM</span>
+</button>
+<!-- 02:30 PM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">02:30 PM</span>
+</button>
+<!-- 03:00 PM (Available) -->
+<button class="h-12 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary hover:text-secondary font-semibold flex items-center justify-center transition-all active:scale-95">
+<span class="font-label-lg text-label-md">03:00 PM</span>
+</button>
+</div>
+</section>
+<!-- Patient Details Summary Box -->
+<section class="bg-surface-card rounded-xl border border-border-subtle p-space-md shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="badge">badge</span>
+<h3 class="font-headline-md text-label-lg font-bold text-brand-navy">Patient Details Summary</h3>
+</div>
+<span class="font-label-sm text-overline uppercase text-primary-container font-extrabold bg-brand-green-soft px-2 py-0.5 rounded">Verified Patient</span>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-1 border-t border-border-subtle text-body-sm font-body-sm">
+<div>
+<span class="text-text-muted block text-[11px] uppercase font-bold tracking-wider">Patient Name</span>
+<span class="font-semibold text-brand-navy text-body-md font-body-md">Kevin Kibet</span>
+</div>
+<div>
+<span class="text-text-muted block text-[11px] uppercase font-bold tracking-wider">Registration No.</span>
+<span class="font-semibold text-brand-navy text-body-md font-body-md">PT-2026-0142</span>
+</div>
+<div class="col-span-2 flex items-center justify-between pt-1 border-t border-dashed border-border-subtle">
+<div class="flex items-center gap-1.5 text-text-muted">
+<span class="material-symbols-outlined text-base" data-icon="phone">phone</span>
+<span>Phone:</span>
+<span class="font-semibold text-brand-navy">0712 345 678</span>
+</div>
+<button class="text-secondary font-semibold text-body-sm hover:underline">Change</button>
+</div>
+</div>
+</section>
+<!-- Atomic Queue Guarantee Notice -->
+<section class="rounded-xl bg-brand-blue-soft/70 border border-secondary/20 p-3.5 flex items-start gap-2.5">
+<div class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[15px]" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div class="space-y-0.5">
+<h4 class="font-headline-md text-label-md font-bold text-secondary">Atomic Queue Guarantee</h4>
+<p class="font-body-sm text-body-sm text-brand-navy leading-relaxed">
+            Real-time consecutive queue number assigned upon confirmation. Prevents double-booking across Moi Teaching Hospital clinics.
+          </p>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom CTA Bar (Level 3 Elevation) -->
+<!-- Exclusion Rule applied: BottomNavBar suppressed because this is a focused task booking canvas -->
+<div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+<div class="w-full max-w-md bg-surface-card border-t border-border-subtle p-margin shadow-[0_-4px_16px_rgba(22,38,74,0.08)] pointer-events-auto flex items-center justify-between gap-3">
+<!-- Selected Slot Recap -->
+<div class="flex flex-col">
+<span class="font-label-sm text-overline uppercase tracking-wider text-text-muted">Selected Slot</span>
+<span class="font-headline-md text-headline-md font-bold text-brand-navy">09:30 AM • Sep 22</span>
+<span class="font-body-sm text-[11px] text-primary-container font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="bolt">bolt</span>
+            Est. Wait: < 10 mins
+          </span>
+</div>
+<!-- Terminal Primary Orange CTA Button -->
+<button class="h-12 px-6 rounded-xl bg-brand-cta-orange hover:bg-brand-accent-rust active:scale-95 transition-all duration-150 text-white font-label-lg text-label-lg font-bold shadow-[0_4px_12px_rgba(242,116,56,0.35)] flex items-center justify-center gap-2 min-w-[155px]" id="confirm-btn" onclick="handleConfirmBooking()">
+<span>Confirm Booking</span>
+<span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    function toggleFavorite() {
+      const favBtn = document.getElementById('fav-icon');
+      const isFilled = favBtn.style.fontVariationSettings.includes("'FILL' 1");
+      if (isFilled) {
+        favBtn.style.fontVariationSettings = "'FILL' 0";
+        favBtn.classList.remove('text-rose-500');
+        favBtn.classList.add('text-text-muted');
+      } else {
+        favBtn.style.fontVariationSettings = "'FILL' 1";
+        favBtn.classList.add('text-rose-500');
+        favBtn.classList.remove('text-text-muted');
+      }
+    }
+
+    function handleConfirmBooking() {
+      const btn = document.getElementById('confirm-btn');
+      btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-xl" data-icon="progress_activity">progress_activity</span><span>Securing Slot...</span>`;
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = `<span class="material-symbols-outlined text-xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span><span>Reserved!</span>`;
+        btn.classList.remove('bg-brand-cta-orange');
+        btn.classList.add('bg-primary-container');
+      }, 1200);
+    }
+  </script>
+</body></html>

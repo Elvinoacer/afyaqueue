@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#060A12]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>AfyaQueue — The Vital Bypass</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface-variant": "#3f4940",
+            "surface-container-highest": "#e0e3e5",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-variant": "#e0e3e5",
+            "primary-fixed": "#9df6b6",
+            "surface-bright": "#f7f9fb",
+            "tertiary-container": "#b6480b",
+            "surface-tint": "#066d3a",
+            "outline": "#6f7a70",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2d3133",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#360f00",
+            "on-error-container": "#93000a",
+            "surface-dim": "#d8dadc",
+            "error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#00522a",
+            "status-danger": "#DC2626",
+            "on-background": "#191c1e",
+            "primary-fixed-dim": "#81d99b",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#063fa4",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "brand-blue-soft": "#EBF1FF",
+            "surface-container-high": "#e6e8ea",
+            "on-primary-container": "#adffc2",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#00174a",
+            "secondary-fixed-dim": "#b3c5ff",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary-fixed-dim": "#ffb597",
+            "surface-container-low": "#f2f4f6",
+            "text-muted": "#64748B",
+            "on-primary-fixed": "#00210d",
+            "tertiary": "#913500",
+            "inverse-on-surface": "#eff1f3",
+            "surface-card": "#FFFFFF",
+            "primary": "#006032",
+            "surface": "#f7f9fb",
+            "secondary-container": "#7297ff",
+            "on-tertiary-container": "#ffe8df",
+            "on-secondary-container": "#002c7c",
+            "secondary-fixed": "#dbe1ff",
+            "background": "#f7f9fb",
+            "brand-navy": "#16264A",
+            "brand-accent-rust": "#C1541A",
+            "surface-container": "#eceef0",
+            "primary-container": "#1e7a46",
+            "inverse-primary": "#81d99b",
+            "border-subtle": "#E2E8F0",
+            "on-surface": "#191c1e",
+            "brand-green-soft": "#E6F4EC",
+            "secondary": "#2e58bd",
+            "outline-variant": "#bec9be",
+            "obsidian": "#060A12",
+            "obsidian-elevated": "#0C1220",
+            "obsidian-card": "#101827",
+            "clinical-cyan": "#0EA5E9",
+            "surgical-emerald": "#1E7A46",
+            "vital-glow": "#22C55E"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-sm": "0.5rem",
+            "space-2xl": "3rem",
+            "gutter-sm": "0.75rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "gutter": "1rem",
+            "margin-lg": "2rem",
+            "margin-md": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem"
+          },
+          fontFamily: {
+            "body-lg": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "display-giant-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "label-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "display-giant": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
+            "label-md": ["Plus Jakarta Sans", "sans-serif"],
+            "overline": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "headline-md": ["18px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            "display-giant-mobile": ["44px", { lineHeight: "52px", letterSpacing: "-0.025em", fontWeight: "800" }],
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "headline-xl-mobile": ["26px", { lineHeight: "32px", letterSpacing: "-0.015em", fontWeight: "700" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "700" }],
+            "display-giant": ["56px", { lineHeight: "64px", letterSpacing: "-0.03em", fontWeight: "800" }],
+            "headline-xl": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+            "overline": ["10px", { lineHeight: "12px", letterSpacing: "0.08em", fontWeight: "800" }],
+            "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-lg": ["22px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "700" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Physical Animation Master Sequencing (1.8s Continuous Symphony) */
+    :root {
+      --easing-spring: cubic-bezier(0.16, 1, 0.3, 1);
+      --easing-snap: cubic-bezier(0.87, 0, 0.13, 1);
+    }
+
+    /* Canvas Baseline */
+    body {
+      background-color: #060A12;
+      color: #F8FAFC;
+      overflow: hidden;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      min-height: max(884px, 100dvh);
+    }
+
+    /* Micro-dots Initial Row */
+    .micro-dot {
+      transition: transform 0.28s var(--easing-snap), opacity 0.2s linear, background-color 0.2s, box-shadow 0.2s;
+    }
+
+    /* Act I: Skip Spark Vector - perfectly sweeping all 5 dots */
+    @keyframes sparkTravel {
+      0% { transform: translateX(-76px) scaleX(0.5); opacity: 0; }
+      15% { opacity: 1; transform: translateX(-56px) scaleX(1); }
+      75% { opacity: 1; transform: translateX(56px) scaleX(1); }
+      100% { transform: translateX(76px) scaleX(1.5); opacity: 0; }
+    }
+
+    /* Act II: ECG Pulse Morph */
+    .ecg-path {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+    }
+
+    @keyframes drawECG {
+      0% { stroke-dashoffset: 200; opacity: 0.3; }
+      20% { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+
+    /* Cross Expansion from Center Lock with Architectural Machined Corners */
+    @keyframes crossDeployVertical {
+      0% { transform: scaleY(0.08) scaleX(0.7); opacity: 0; }
+      40% { opacity: 1; }
+      80% { transform: scaleY(1.06) scaleX(1.02); }
+      100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+    }
+
+    @keyframes crossDeployHorizontal {
+      0% { transform: scaleX(0.08) scaleY(0.7); opacity: 0; }
+      40% { opacity: 1; }
+      80% { transform: scaleX(1.06) scaleY(1.02); }
+      100% { transform: scaleX(1) scaleY(1); opacity: 1; }
+    }
+
+    /* Center Radiance Flash */
+    @keyframes radialDissipate {
+      0% { transform: scale(0.2); opacity: 0; }
+      45% { opacity: 0.85; }
+      100% { transform: scale(3.2); opacity: 0; }
+    }
+
+    /* Act IV: Falling Laser Droplet - detaches & shoots downward without pushing layout */
+    @keyframes dropletFall {
+      0% {
+        transform: translateY(0) scaleY(0.3);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(12px) scaleY(1.2);
+      }
+      80% {
+        opacity: 0.9;
+        transform: translateY(80px) scaleY(1.5);
+      }
+      100% {
+        transform: translateY(120px) scaleY(0.4);
+        opacity: 0;
+      }
+    }
+
+    /* Bottom Router Ticket Unfold */
+    @keyframes passUnfold {
+      0% { transform: translateY(108%); opacity: 0; }
+      60% { opacity: 1; }
+      85% { transform: translateY(-4px); }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Subdued Pulse for Live Status */
+    @keyframes liveBeacon {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.9); }
+    }
+    .beacon-pulse {
+      animation: liveBeacon 2s ease-in-out infinite;
+    }
+
+    /* Architectural precision glass bars (machined 7px radii) */
+    .glass-pill-vertical {
+      background: linear-gradient(180deg, #22C55E 0%, #1E7A46 80%, #14532D 100%);
+      box-shadow: 0 0 28px rgba(34, 197, 94, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+    .glass-pill-horizontal {
+      background: linear-gradient(90deg, #38BDF8 0%, #0EA5E9 75%, #0369A1 100%);
+      box-shadow: 0 0 28px rgba(14, 165, 233, 0.45), inset 1px 0 2px rgba(255, 255, 255, 0.6);
+    }
+
+    /* Specular highlight border for surgical emerald CTA */
+    .cta-emerald-surface {
+      background: linear-gradient(135deg, #10B981 0%, #059669 45%, #1E7A46 100%);
+      border-top: 1px solid rgba(167, 243, 208, 0.45);
+      box-shadow: 0 8px 24px -4px rgba(6, 78, 59, 0.65), 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .cta-emerald-surface:hover {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 45%, #047857 100%);
+    }
+  </style>
+</head>
+<body class="relative flex flex-col justify-between h-screen w-screen overflow-hidden font-body-md bg-[#060A12] antialiased select-none">
+<!-- Ambient Backdrop: Precision Clinical Focus -->
+<div class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+<div class="w-[340px] h-[340px] rounded-full opacity-0 transition-opacity duration-1000 bg-[radial-gradient(circle,rgba(30,122,70,0.22)_0%,rgba(14,165,233,0.14)_45%,rgba(6,10,18,0)_75%)]" id="ambient-radial"></div>
+</div>
+<!-- Micro Grid Reference Hairlines -->
+<div class="pointer-events-none absolute inset-0 z-0 opacity-15" style="background-image: linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Shockwave Ring Generator -->
+<div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+<div class="w-32 h-32 rounded-full border border-emerald-400/50 opacity-0 pointer-events-none" id="shockwave"></div>
+</div>
+<!-- ======================================================== -->
+<!-- CENTERPIECE CHOREOGRAPHY (Act I, II, and Top of Act III) -->
+<!-- ======================================================== -->
+<main class="relative z-20 flex-1 flex flex-col items-center justify-center w-full px-6">
+<div class="relative flex flex-col items-center justify-center w-full max-w-sm transition-transform duration-700 ease-out" id="stage-anchor">
+<!-- Graphic Arena (176x176 bound) -->
+<div class="relative w-44 h-44 flex items-center justify-center">
+<!-- ACT I: The 5 Linear Queue Micro-Dots -->
+<div class="absolute flex items-center justify-center gap-6 w-full h-8 z-20 pointer-events-none" id="queue-dots-container">
+<div class="micro-dot w-2 h-2 rounded-full bg-slate-700/80" data-index="0"></div>
+<div class="micro-dot w-2 h-2 rounded-full bg-slate-700/80" data-index="1"></div>
+<!-- Central living anchor dot: never disappears completely -->
+<div class="micro-dot w-2.5 h-2.5 rounded-full bg-slate-600 z-10" data-index="2" id="center-anchor-dot"></div>
+<div class="micro-dot w-2 h-2 rounded-full bg-slate-700/80" data-index="3"></div>
+<div class="micro-dot w-2 h-2 rounded-full bg-slate-700/80" data-index="4"></div>
+<!-- Surgical Emerald Spark traveling vector (Center-anchored) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-1 bg-emerald-400 rounded-full blur-[0.8px] opacity-0 shadow-[0_0_12px_#34d399]" id="spark-line"></div>
+</div>
+<!-- ACT II: ECG Pulse Vector (Tight to center 52 -> 124 -> 88) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-25 opacity-0 transition-opacity duration-150 ease-out" fill="none" id="ecg-svg" viewbox="0 0 176 176">
+<path class="ecg-path" d="M 52 88 L 68 88 L 74 74 L 82 108 L 88 56 L 94 98 L 100 88 L 124 88" stroke="url(#ecgGradient)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="ecgGradient" x1="52" x2="124" y1="88" y2="88">
+<stop stop-color="#0EA5E9" stop-opacity="0.4"></stop>
+<stop offset="0.5" stop-color="#22C55E"></stop>
+<stop offset="1" stop-color="#1E7A46" stop-opacity="0.4"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- ACT II: Interlocking Medical Cross (AfyaQueue Monogram) -->
+<div class="relative w-24 h-24 flex items-center justify-center opacity-0 z-30 pointer-events-none" id="cross-assembly">
+<!-- Vertical Capsule: Surgical Forest Emerald (#1E7A46) with 7px machined radius -->
+<div class="absolute w-6 h-20 rounded-[7px] glass-pill-vertical border border-emerald-300/40" id="cross-vertical"></div>
+<!-- Horizontal Capsule: Clinical Cyan (#0EA5E9) with 7px machined radius (No mix-blend-screen to retain pure saturation) -->
+<div class="absolute h-6 w-20 rounded-[7px] glass-pill-horizontal border border-sky-200/40" id="cross-horizontal"></div>
+<!-- Refracted Intersection Core: Exact 24px x 24px (w-6 h-6) flush white light glow without dark border -->
+<div class="absolute w-6 h-6 rounded-[2px] bg-white shadow-[0_0_20px_rgba(255,255,255,1)] opacity-0 z-40" id="cross-core"></div>
+</div>
+</div>
+<!-- ACT III: Architectural Typography -->
+<div class="relative overflow-hidden mt-2 text-center">
+<div class="translate-y-full opacity-0 transition-all duration-700 ease-out" id="text-reveal-mask">
+<div class="flex items-center justify-center gap-2">
+<h1 class="font-headline-xl font-bold tracking-tight text-white text-[28px] leading-tight">Afya<span class="text-emerald-400">Queue</span></h1>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 uppercase tracking-widest">OPD v2.6</span>
+</div>
+<p class="font-body-sm text-slate-400 font-medium tracking-normal mt-1 text-[13px]">Skip the wait. See a doctor.</p>
+</div>
+</div>
+<!-- ACT IV: Falling Laser Droplet (Positioned absolutely below typography, zero layout push) -->
+<div class="absolute top-[236px] left-1/2 -translate-x-1/2 w-4 pointer-events-none flex justify-center z-25 overflow-visible" id="droplet-anchor">
+<div class="w-[2px] h-10 bg-gradient-to-b from-transparent via-emerald-400 to-sky-300 rounded-full opacity-0 shadow-[0_0_8px_#34d399]" id="light-thread"></div>
+</div>
+</div>
+</main>
+<!-- ======================================================== -->
+<!-- ACT III (PART B): BOTTOM INSTANT ROUTER DOCK             -->
+<!-- Physical Boarding Pass / High-Value Medical Ticket       -->
+<!-- ======================================================== -->
+<footer class="relative z-30 w-full max-w-md mx-auto px-4 pb-6 translate-y-full opacity-0" id="router-dock">
+<!-- Dock Container: Precision Institutional Surface -->
+<div class="relative rounded-2xl bg-[#0D1524] border border-slate-800 shadow-[0_-8px_32px_rgba(0,0,0,0.65)] overflow-hidden">
+<!-- Top Dynamic Progress Beam (Thread Split Junction) -->
+<div class="w-full h-1 bg-slate-800/60 relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-emerald-500 via-sky-400 to-emerald-500 -translate-x-full transition-transform duration-700 ease-out" id="dock-beam"></div>
+</div>
+<!-- Ticket Core: Patient & Live OPD Token Segment -->
+<div class="p-4 sm:p-5 flex flex-col gap-4">
+<!-- Header Ribbon: Facility Verification -->
+<div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 beacon-pulse"></span>
+<span class="font-overline text-[10px] tracking-wider text-slate-300 font-semibold uppercase">MTRH • Eldoret Main Facility</span>
+</div>
+<div class="flex items-center gap-1.5 text-sky-400">
+<span class="material-symbols-outlined text-[15px]" data-icon="verified_user">verified_user</span>
+<span class="font-mono text-[11px] font-bold text-slate-300">FastTrack Gate</span>
+</div>
+</div>
+<!-- Middle Row: Patient Badge & Live Token #18 Counterpiece -->
+<div class="flex items-center justify-between gap-4">
+<!-- Patient Meta -->
+<div class="flex flex-col">
+<span class="font-overline text-[10px] tracking-wider text-slate-400 font-semibold uppercase">Registered Patient</span>
+<span class="font-headline-md font-bold text-white text-[17px] tracking-tight">Kevin Kibet</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-mono text-[11px] text-slate-400">PT-2026-0142</span>
+<span class="text-slate-600">•</span>
+<span class="text-emerald-400 text-[11px] font-medium">Bypass Active</span>
+</div>
+</div>
+<!-- Token #18 Key Feature Badge -->
+<div class="relative flex flex-col items-center justify-center bg-[#131F35] border border-sky-500/30 rounded-xl px-4 py-2 shadow-inner">
+<span class="font-overline text-[9px] tracking-widest text-sky-400 font-bold uppercase">Ready Token</span>
+<span class="font-headline-xl font-extrabold text-white text-[28px] leading-none my-0.5 tracking-tighter">#18</span>
+<span class="font-body-sm text-[10px] text-emerald-400 font-medium">Room 4B • Dr. Achieng</span>
+</div>
+</div>
+<!-- Harmonized Surgical Emerald CTA with live telemetry progress bar -->
+<div class="pt-1">
+<button class="relative w-full h-12 cta-emerald-surface active:scale-[0.98] transition-all rounded-xl font-label-lg font-bold text-white flex items-center justify-between px-4 overflow-hidden group" id="cta-enter" onclick="triggerDestination('Live Queue')">
+<!-- Subdued live auto-route telemetry progress bar -->
+<div class="absolute inset-y-0 left-0 bg-white/10 w-0 transition-all duration-[3000ms] ease-linear pointer-events-none" id="cta-telemetry-bar"></div>
+<div class="relative z-10 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse"></span>
+<span id="cta-label-text">Proceed to Live Queue</span>
+</div>
+<span class="relative z-10 material-symbols-outlined text-[19px] transition-transform group-hover:translate-x-1" data-icon="arrow_forward" id="cta-icon">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Bottom Sub-Utility Bar: Fast Role Evaluator & Controls -->
+<div class="bg-[#090E1A] px-4 py-2.5 border-t border-slate-800/80 flex items-center justify-between text-xs">
+<!-- Role Switching Pills -->
+<div class="flex items-center gap-2">
+<span class="text-slate-500 font-medium text-[11px]">Route as:</span>
+<button class="px-2 py-0.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-medium transition-colors border border-slate-700/60" onclick="triggerDestination('Patient Home')">Patient</button>
+<button class="px-2 py-0.5 rounded-md bg-transparent hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-[11px] font-medium transition-colors" onclick="triggerDestination('Clinical Desk')">Clinical Desk</button>
+</div>
+<!-- Replay Animation Trigger with Reflow Reset -->
+<button class="text-slate-400 hover:text-emerald-400 active:scale-95 p-1 rounded-md transition-all flex items-center gap-1.5 text-[11px]" id="replay-btn" title="Replay 1.8s Sequence">
+<span class="material-symbols-outlined text-[16px] transition-transform" data-icon="sync" id="sync-icon">sync</span>
+<span class="font-mono text-[10px] tracking-wide text-slate-400">1.8s Sync</span>
+</button>
+</div>
+</div>
+<!-- Micro Privacy Footnote -->
+<div class="mt-3 flex items-center justify-between px-2 text-[10px] text-slate-600 font-medium">
+<span>Moi Teaching and Referral Hospital — Health Informatics System</span>
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Operational</span>
+</span>
+</div>
+</footer>
+<!-- ======================================================== -->
+<!-- JAVASCRIPT MASTER CHOREOGRAPHY ENGINE (1.8s Unbroken Chain) -->
+<!-- ======================================================== -->
+<script>
+    let sequenceTimeouts = [];
+
+    function clearAllSequenceTimeouts() {
+      sequenceTimeouts.forEach(id => clearTimeout(id));
+      sequenceTimeouts = [];
+    }
+
+    function executeChoreography() {
+      clearAllSequenceTimeouts();
+
+      // DOM Elements
+      const stageAnchor = document.getElementById('stage-anchor');
+      const queueDots = document.querySelectorAll('.micro-dot');
+      const centerDot = document.getElementById('center-anchor-dot');
+      const sparkLine = document.getElementById('spark-line');
+      const ecgSvg = document.getElementById('ecg-svg');
+      const ecgPath = document.querySelector('.ecg-path');
+      const crossAssembly = document.getElementById('cross-assembly');
+      const crossVertical = document.getElementById('cross-vertical');
+      const crossHorizontal = document.getElementById('cross-horizontal');
+      const crossCore = document.getElementById('cross-core');
+      const shockwave = document.getElementById('shockwave');
+      const ambientRadial = document.getElementById('ambient-radial');
+      const textRevealMask = document.getElementById('text-reveal-mask');
+      const lightThread = document.getElementById('light-thread');
+      const routerDock = document.getElementById('router-dock');
+      const dockBeam = document.getElementById('dock-beam');
+      const telemetryBar = document.getElementById('cta-telemetry-bar');
+      const ctaLabel = document.getElementById('cta-label-text');
+      const syncIcon = document.getElementById('sync-icon');
+
+      // Spin sync icon briefly
+      syncIcon.classList.add('rotate-180');
+      setTimeout(() => syncIcon.classList.remove('rotate-180'), 400);
+
+      // 1. HARD RESET ALL INLINE STYLES & ANIMATIONS
+      stageAnchor.style.transform = 'translateY(0)';
+      ambientRadial.style.opacity = '0';
+      shockwave.style.animation = 'none';
+      shockwave.style.opacity = '0';
+      shockwave.style.transform = 'scale(0.2)';
+      
+      textRevealMask.style.transform = 'translateY(100%)';
+      textRevealMask.style.opacity = '0';
+      
+      lightThread.style.animation = 'none';
+      lightThread.style.opacity = '0';
+      lightThread.style.transform = 'translateY(0) scaleY(0.3)';
+      
+      routerDock.style.animation = 'none';
+      routerDock.style.transform = 'translateY(100%)';
+      routerDock.style.opacity = '0';
+      
+      dockBeam.style.transform = 'translateX(-100%)';
+      telemetryBar.style.width = '0%';
+      ctaLabel.textContent = 'Proceed to Live Queue';
+
+      sparkLine.style.animation = 'none';
+      sparkLine.style.opacity = '0';
+
+      ecgSvg.style.opacity = '0';
+      ecgPath.style.animation = 'none';
+
+      crossAssembly.style.opacity = '0';
+      crossVertical.style.animation = 'none';
+      crossHorizontal.style.animation = 'none';
+      crossCore.style.opacity = '0';
+
+      // Reset Dots: indices 0, 1, 3, 4 are outer, index 2 is living center anchor
+      queueDots.forEach((dot, idx) => {
+        dot.style.transform = 'translateX(0) scale(1)';
+        dot.style.opacity = '0.85';
+        dot.style.backgroundColor = idx === 2 ? '#64748B' : '#334155';
+        dot.style.boxShadow = 'none';
+      });
+
+      // 2. FORCE REFLOW ON ALL ANIMATION TARGETS TO GUARANTEE FRESH PLAYBACK
+      void sparkLine.offsetWidth;
+      void ecgPath.offsetWidth;
+      void shockwave.offsetWidth;
+      void crossVertical.offsetWidth;
+      void crossHorizontal.offsetWidth;
+      void lightThread.offsetWidth;
+      void routerDock.offsetWidth;
+      void centerDot.offsetWidth;
+
+      // ==========================================
+      // ACT I (0.0s – 0.42s): "The Skip Vector"
+      // Sweep spark perfectly across all five dots
+      // ==========================================
+      sparkLine.style.animation = 'sparkTravel 0.42s cubic-bezier(0.2, 0, 0.25, 1) forwards';
+
+      // Outer dots translate horizontally into center, center dot scales up to bright emerald anchor
+      const t1 = setTimeout(() => {
+        queueDots[0].style.transform = 'translateX(48px) scale(0.35)';
+        queueDots[0].style.opacity = '0.2';
+        queueDots[1].style.transform = 'translateX(24px) scale(0.65)';
+        queueDots[1].style.opacity = '0.4';
+
+        queueDots[3].style.transform = 'translateX(-24px) scale(0.65)';
+        queueDots[3].style.opacity = '0.4';
+        queueDots[4].style.transform = 'translateX(-48px) scale(0.35)';
+        queueDots[4].style.opacity = '0.2';
+
+        // Continuous living anchor: center dot turns bright emerald & scales up
+        centerDot.style.backgroundColor = '#10B981';
+        centerDot.style.boxShadow = '0 0 14px #10B981';
+        centerDot.style.transform = 'scale(1.8)';
+      }, 150);
+      sequenceTimeouts.push(t1);
+
+      // Outer dots finish coalescing into center anchor
+      const t2 = setTimeout(() => {
+        queueDots[0].style.transform = 'translateX(64px) scale(0)';
+        queueDots[0].style.opacity = '0';
+        queueDots[1].style.transform = 'translateX(32px) scale(0)';
+        queueDots[1].style.opacity = '0';
+
+        queueDots[3].style.transform = 'translateX(-32px) scale(0)';
+        queueDots[3].style.opacity = '0';
+        queueDots[4].style.transform = 'translateX(-64px) scale(0)';
+        queueDots[4].style.opacity = '0';
+      }, 340);
+      sequenceTimeouts.push(t2);
+
+      // ==========================================
+      // ACT II (0.42s – 0.95s): "ECG to Cross"
+      // No blackout: living anchor triggers ECG line
+      // ==========================================
+      const t3 = setTimeout(() => {
+        ecgSvg.style.opacity = '1';
+        ecgPath.style.animation = 'drawECG 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards';
+      }, 420);
+      sequenceTimeouts.push(t3);
+
+      // Peak deflection: smoothly cross-fade ECG as architectural cross capsules expand
+      const t4 = setTimeout(() => {
+        // Smooth cross-fade (transition: opacity 150ms ease-out)
+        ecgSvg.style.opacity = '0';
+        crossAssembly.style.opacity = '1';
+        
+        // Hide the center anchor as the cross fully takes over
+        centerDot.style.opacity = '0';
+
+        // Architectural machined cross deployment
+        crossVertical.style.animation = 'crossDeployVertical 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+        crossHorizontal.style.animation = 'crossDeployHorizontal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+
+        // Pure white flush core (24x24) luminescence
+        crossCore.style.opacity = '1';
+        crossCore.style.transition = 'opacity 0.18s ease-in';
+
+        // Fine shockwave dissipation
+        shockwave.style.animation = 'radialDissipate 0.65s cubic-bezier(0.1, 0.8, 0.3, 1) forwards';
+
+        // Centered emerald/cyan radial backlight ignition
+        ambientRadial.style.opacity = '1';
+      }, 800);
+      sequenceTimeouts.push(t4);
+
+      // ==========================================
+      // ACT III (1.05s – 1.80s): "The Physical Handoff"
+      // Smooth upward glide, typography slide, and falling droplet
+      // ==========================================
+      const t5 = setTimeout(() => {
+        stageAnchor.style.transform = 'translateY(-36px)';
+        
+        // Wordmark and tagline slice up from invisible baseline mask
+        textRevealMask.style.transform = 'translateY(0)';
+        textRevealMask.style.opacity = '1';
+
+        // Falling laser droplet shoots downward toward the dock
+        lightThread.style.animation = 'dropletFall 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+      }, 1100);
+      sequenceTimeouts.push(t5);
+
+      // Droplet impact: bottom Router Dock unfolds upward and top beam splits
+      const t6 = setTimeout(() => {
+        routerDock.style.animation = 'passUnfold 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+        
+        // Exact millisecond split for horizontal beam
+        const t7 = setTimeout(() => {
+          dockBeam.style.transform = 'translateX(0)';
+          
+          // Subdued auto-route telemetry bar animation
+          telemetryBar.style.width = '100%';
+        }, 220);
+        sequenceTimeouts.push(t7);
+
+      }, 1320);
+      sequenceTimeouts.push(t6);
+    }
+
+    // Interactive routing trigger for prototype evaluation
+    function triggerDestination(target) {
+      const ctaLabel = document.getElementById('cta-label-text');
+      const ctaIcon = document.getElementById('cta-icon');
+      const telemetryBar = document.getElementById('cta-telemetry-bar');
+
+      telemetryBar.style.transitionDuration = '400ms';
+      telemetryBar.style.width = '100%';
+      ctaIcon.textContent = 'hourglass_empty';
+      ctaIcon.classList.add('animate-spin');
+      ctaLabel.textContent = `Connecting to ${target}...`;
+
+      setTimeout(() => {
+        ctaIcon.classList.remove('animate-spin');
+        ctaIcon.textContent = 'check_circle';
+        ctaLabel.textContent = 'FastTrack Gate Verified';
+      }, 650);
+    }
+
+    // Auto-boot sequence on load & bind replay
+    window.addEventListener('DOMContentLoaded', () => {
+      executeChoreography();
+      document.getElementById('replay-btn').addEventListener('click', executeChoreography);
+    });
+  </script>
+</body></html>

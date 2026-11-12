@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue - Staff Add Doctor / Service Desk</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#360f00",
+            "surface-card": "#FFFFFF",
+            "on-tertiary": "#ffffff",
+            "secondary": "#2e58bd",
+            "status-danger": "#DC2626",
+            "on-secondary-fixed": "#00174a",
+            "brand-navy": "#16264A",
+            "text-muted": "#64748B",
+            "on-primary-container": "#adffc2",
+            "on-secondary-container": "#002c7c",
+            "surface-tint": "#066d3a",
+            "surface": "#f7f9fb",
+            "primary-container": "#1e7a46",
+            "secondary-fixed": "#dbe1ff",
+            "outline-variant": "#bec9be",
+            "surface-container-high": "#e6e8ea",
+            "on-background": "#191c1e",
+            "secondary-container": "#7297ff",
+            "outline": "#6f7a70",
+            "surface-variant": "#e0e3e5",
+            "surface-bright": "#f7f9fb",
+            "inverse-on-surface": "#eff1f3",
+            "surface-dim": "#d8dadc",
+            "tertiary-container": "#b6480b",
+            "surface-container": "#eceef0",
+            "brand-accent-rust": "#C1541A",
+            "on-primary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed-dim": "#ffb597",
+            "error-container": "#ffdad6",
+            "brand-blue-soft": "#EBF1FF",
+            "on-primary-fixed-variant": "#00522a",
+            "on-surface": "#191c1e",
+            "primary-fixed": "#9df6b6",
+            "inverse-surface": "#2d3133",
+            "surface-container-highest": "#e0e3e5",
+            "inverse-primary": "#81d99b",
+            "surface-container-low": "#f2f4f6",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed": "#00210d",
+            "brand-green-soft": "#E6F4EC",
+            "on-surface-variant": "#3f4940",
+            "on-tertiary-container": "#ffe8df",
+            "primary": "#006032",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "tertiary-fixed": "#ffdbcd",
+            "tertiary": "#913500",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#81d99b",
+            "error": "#ba1a1a",
+            "border-subtle": "#E2E8F0",
+            "on-secondary-fixed-variant": "#063fa4",
+            "background": "#f7f9fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-2xl": "3rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "gutter-sm": "0.75rem",
+            "gutter": "1rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "2rem",
+            "margin-md": "1.5rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "overline": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-brand-navy min-h-screen flex flex-col font-body-md antialiased pb-32">
+<!-- Top Navigation Header (Global Anchor & Contextual Back) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full h-14 px-4 bg-surface-card border-b border-border-subtle shadow-sm">
+<div class="flex items-center space-x-3">
+<button aria-label="Go Back" class="p-1.5 -ml-1 text-text-muted hover:text-brand-navy active:scale-95 transition-transform rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="local_hospital">local_hospital</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">AfyaQueue</span>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="px-2 py-0.5 rounded-full bg-brand-green-soft text-primary font-label-sm text-label-sm">STATION 4</span>
+<button aria-label="Notifications" class="p-1.5 text-text-muted hover:text-brand-navy active:scale-95 transition-transform rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-tertiary"></span>
+</button>
+</div>
+</header>
+<!-- Page Context Sub-Header -->
+<section class="bg-surface-card px-margin py-3 border-b border-border-subtle">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-brand-navy font-bold">Add Doctor / Service</h1>
+<p class="font-body-sm text-body-sm text-text-muted">MTRH Outpatient Desk • Station 4</p>
+</div>
+<div class="flex items-center gap-1.5 bg-brand-blue-soft px-2.5 py-1 rounded-full border border-secondary/15">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Live Mode</span>
+</div>
+</div>
+</section>
+<!-- Main Scrollable Form Container -->
+<main class="w-full max-w-lg mx-auto px-margin pt-space-md space-y-space-md flex-1">
+<!-- Avatar / Clinical ID Badge Section -->
+<div class="bg-surface-card p-space-md rounded-xl border border-border-subtle shadow-sm flex items-center justify-between">
+<div class="flex items-center space-x-3.5">
+<div class="relative w-14 h-14 rounded-full bg-brand-blue-soft border-2 border-dashed border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-size: 28px;">stethoscope</span>
+<button class="absolute -bottom-1 -right-1 bg-secondary text-white w-6 h-6 rounded-full flex items-center justify-center shadow-md active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 14px;">photo_camera</span>
+</button>
+</div>
+<div>
+<h2 class="font-label-lg text-label-lg text-brand-navy">Doctor Photo / Badge</h2>
+<p class="font-body-sm text-body-sm text-text-muted">Upload biometric badge or portrait (JPG/PNG)</p>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-surface-container text-brand-navy rounded-lg font-label-sm text-label-sm hover:bg-surface-container-high transition-colors">
+        Browse
+      </button>
+</div>
+<!-- Doctor / Clinical Service Name Field -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-brand-navy">
+        Doctor / Clinical Service Name <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3.5 text-text-muted pointer-events-none">person</span>
+<input class="w-full h-12 pl-10 pr-4 bg-surface-card rounded-xl border border-border-subtle text-brand-navy font-body-md text-body-md focus:border-secondary focus:ring-2 focus:ring-secondary/15 transition-all outline-none" placeholder="Dr. Peter Kamau, MD" type="text" value="Dr. Peter Kamau, MD"/>
+</div>
+</div>
+<!-- Specialty / Clinic Unit Selector -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block font-label-md text-label-md text-brand-navy">
+          Specialty / Clinic Unit <span class="text-error">*</span>
+</label>
+<span class="font-body-sm text-body-sm text-text-muted">Single select</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<!-- Active Chip: General Medicine -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-white font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined" style="font-size: 14px;">check</span>
+<span>General Medicine</span>
+</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-text-muted font-label-sm text-label-sm hover:border-secondary transition-colors">
+          Pediatrics
+        </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-text-muted font-label-sm text-label-sm hover:border-secondary transition-colors">
+          Dental Surgery
+        </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-text-muted font-label-sm text-label-sm hover:border-secondary transition-colors">
+          Orthopedics
+        </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-text-muted font-label-sm text-label-sm hover:border-secondary transition-colors">
+          ENT Clinic
+        </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-card border border-border-subtle text-text-muted font-label-sm text-label-sm hover:border-secondary transition-colors">
+          Pharmacy Triage
+        </button>
+</div>
+</div>
+<!-- Facility Location Defaulted Input -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-brand-navy">
+        Facility Location <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3.5 text-text-muted pointer-events-none">meeting_room</span>
+<input class="w-full h-12 pl-10 pr-10 bg-surface-card rounded-xl border border-border-subtle text-brand-navy font-body-md text-body-md focus:border-secondary focus:ring-2 focus:ring-secondary/15 transition-all outline-none" type="text" value="Moi Teaching & Referral Hospital — Wing 4B, Room 18"/>
+<span class="material-symbols-outlined absolute right-3 top-3.5 text-primary">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted pl-1">Defaulted from Station 4 outpatient config</p>
+</div>
+<!-- Available Date Horizontal Ribbon -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block font-label-md text-label-md text-brand-navy">
+          Available Date <span class="text-error">*</span>
+</label>
+<span class="font-body-sm text-body-sm text-secondary font-medium">September 2025</span>
+</div>
+<div class="flex space-x-2 overflow-x-auto no-scrollbar pb-1">
+<!-- Date Pill 1: Today (Selected) -->
+<button class="flex-shrink-0 flex flex-col items-center justify-center w-20 py-2.5 rounded-xl bg-primary text-white shadow-sm border border-primary">
+<span class="font-overline text-overline uppercase tracking-wider opacity-80">TODAY</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">22</span>
+<span class="font-label-sm text-label-sm">Mon</span>
+</button>
+<!-- Date Pill 2: Tomorrow -->
+<button class="flex-shrink-0 flex flex-col items-center justify-center w-20 py-2.5 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary transition-colors">
+<span class="font-overline text-overline uppercase tracking-wider text-text-muted">TOMORROW</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">23</span>
+<span class="font-label-sm text-label-sm text-text-muted">Tue</span>
+</button>
+<!-- Date Pill 3: Wed 24 Sep -->
+<button class="flex-shrink-0 flex flex-col items-center justify-center w-20 py-2.5 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary transition-colors">
+<span class="font-overline text-overline uppercase tracking-wider text-text-muted">SEP</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">24</span>
+<span class="font-label-sm text-label-sm text-text-muted">Wed</span>
+</button>
+<!-- Date Pill 4: Thu 25 Sep -->
+<button class="flex-shrink-0 flex flex-col items-center justify-center w-20 py-2.5 rounded-xl bg-surface-card border border-border-subtle text-brand-navy hover:border-secondary transition-colors">
+<span class="font-overline text-overline uppercase tracking-wider text-text-muted">SEP</span>
+<span class="font-headline-md text-headline-md font-bold mt-0.5">25</span>
+<span class="font-label-sm text-label-sm text-text-muted">Thu</span>
+</button>
+</div>
+</div>
+<!-- Available Time Slots (3-Column Grid) -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block font-label-md text-label-md text-brand-navy">
+          Available Time Slots <span class="text-error">*</span>
+</label>
+<span class="font-body-sm text-body-sm text-text-muted">7 of 10 selected</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<!-- 09:00 AM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          09:00 AM
+        </button>
+<!-- 09:30 AM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          09:30 AM
+        </button>
+<!-- 10:00 AM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          10:00 AM
+        </button>
+<!-- 10:30 AM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          10:30 AM
+        </button>
+<!-- 11:00 AM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          11:00 AM
+        </button>
+<!-- 11:30 AM (Unselected) -->
+<button class="flex items-center justify-center py-2 px-2.5 rounded-xl bg-surface-card border border-border-subtle text-text-muted font-label-md text-label-md hover:border-secondary transition-colors">
+          11:30 AM
+        </button>
+<!-- 02:00 PM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          02:00 PM
+        </button>
+<!-- 02:30 PM (Selected) -->
+<button class="flex items-center justify-center gap-1 py-2 px-2.5 rounded-xl bg-brand-blue-soft border border-secondary text-secondary font-label-md text-label-md shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span>
+          02:30 PM
+        </button>
+<!-- 03:00 PM (Unselected) -->
+<button class="flex items-center justify-center py-2 px-2.5 rounded-xl bg-surface-card border border-border-subtle text-text-muted font-label-md text-label-md hover:border-secondary transition-colors">
+          03:00 PM
+        </button>
+</div>
+<!-- Custom Slot Action -->
+<button class="w-full py-2.5 border border-dashed border-secondary/40 rounded-xl text-secondary font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-brand-blue-soft/50 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+        + Custom Slot
+      </button>
+</div>
+<!-- Average Consultation Time Stepper & Algorithmic Notice -->
+<div class="bg-surface-card p-space-md rounded-xl border border-border-subtle shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<label class="block font-label-lg text-label-lg text-brand-navy">Average Consultation Time</label>
+<span class="font-body-sm text-body-sm text-text-muted">Dynamic queue factor</span>
+</div>
+<div class="flex items-center space-x-2 bg-brand-green-soft px-3 py-1.5 rounded-xl border border-primary/20">
+<button class="w-7 h-7 rounded-lg bg-surface-card text-brand-navy flex items-center justify-center shadow-xs active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary px-1">5</span>
+<span class="font-label-sm text-label-sm text-primary">mins</span>
+<button class="w-7 h-7 rounded-lg bg-surface-card text-brand-navy flex items-center justify-center shadow-xs active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+</button>
+</div>
+</div>
+<div class="p-2.5 bg-surface rounded-lg border border-border-subtle flex items-start space-x-2 text-text-muted">
+<span class="material-symbols-outlined text-secondary" style="font-size: 16px; margin-top: 2px;">info</span>
+<p class="font-body-sm text-body-sm leading-tight">
+          Used for real-time wait estimation calculation: <span class="font-semibold text-brand-navy">Ahead × Avg Time</span>. Directly calibrates AfyaQueue live display.
+        </p>
+</div>
+</div>
+<!-- Primary CTA Area -->
+<div class="pt-2 pb-6 space-y-2">
+<button class="w-full h-12 bg-tertiary hover:bg-brand-accent-rust active:scale-[0.98] text-white font-label-lg text-label-lg font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
+<span>Save Doctor & Publish Slots</span>
+<span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-1.5 text-text-muted font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-primary" style="font-size: 16px;">sync</span>
+<span>Slots will sync to Patient Discovery in real time</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar: Docked 5-tab shell matching Shared Components specification -->
+<!-- Active state autonomously locked to 'Desk' based on current screen domain -->
+<nav class="fixed bottom-0 left-0 w-full h-14 z-50 flex justify-around items-center px-margin bg-surface-card border-t border-border-subtle shadow-md">
+<!-- Tab 1: Live Queue -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+<span>Live Queue</span>
+</a>
+<!-- Tab 2: Book -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span>Book</span>
+</a>
+<!-- Tab 3: Records -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span>Records</span>
+</a>
+<!-- Tab 4: Desk (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-sm text-label-sm gap-0.5 font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="clinical_notes" style="font-variation-settings: 'FILL' 1;">clinical_notes</span>
+<span>Desk</span>
+</a>
+<!-- Tab 5: Profile -->
+<a class="flex flex-col items-center justify-center text-text-muted font-label-sm text-label-sm gap-0.5 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span>Profile</span>
+</a>
+</nav>
+</body></html>

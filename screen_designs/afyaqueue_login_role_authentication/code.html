@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AfyaQueue Login & Role Authentication</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#063fa4",
+            "brand-green-soft": "#E6F4EC",
+            "inverse-surface": "#2d3133",
+            "primary-fixed": "#9df6b6",
+            "outline-variant": "#bec9be",
+            "surface-container-high": "#e6e8ea",
+            "tertiary-container": "#b6480b",
+            "text-muted": "#64748B",
+            "secondary": "#2e58bd",
+            "brand-accent-rust": "#C1541A",
+            "on-error-container": "#93000a",
+            "border-subtle": "#E2E8F0",
+            "on-primary-fixed-variant": "#00522a",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#ffe8df",
+            "inverse-on-surface": "#eff1f3",
+            "surface-container-highest": "#e0e3e5",
+            "error": "#ba1a1a",
+            "inverse-primary": "#81d99b",
+            "on-tertiary-fixed": "#360f00",
+            "surface-dim": "#d8dadc",
+            "tertiary-fixed-dim": "#ffb597",
+            "brand-navy": "#16264A",
+            "surface-card": "#FFFFFF",
+            "on-surface-variant": "#3f4940",
+            "secondary-fixed": "#dbe1ff",
+            "primary-fixed-dim": "#81d99b",
+            "primary": "#006032",
+            "on-secondary-container": "#002c7c",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#b3c5ff",
+            "tertiary-fixed": "#ffdbcd",
+            "outline": "#6f7a70",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#00174a",
+            "on-primary-container": "#adffc2",
+            "primary-container": "#1e7a46",
+            "surface-variant": "#e0e3e5",
+            "on-error": "#ffffff",
+            "surface-container": "#eceef0",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-primary": "#ffffff",
+            "tertiary": "#913500",
+            "surface-container-low": "#f2f4f6",
+            "surface-tint": "#066d3a",
+            "on-background": "#191c1e",
+            "surface": "#f7f9fb",
+            "on-primary-fixed": "#00210d",
+            "error-container": "#ffdad6",
+            "status-danger": "#DC2626",
+            "secondary-container": "#7297ff",
+            "brand-blue-soft": "#EBF1FF",
+            "background": "#f7f9fb",
+            "on-surface": "#191c1e",
+            "surface-bright": "#f7f9fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "margin-lg": "2rem",
+            "space-2xl": "3rem",
+            "space-xs": "0.25rem",
+            "margin-md": "1.5rem",
+            "gutter-sm": "0.75rem"
+          },
+          "fontFamily": {
+            "display-giant": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "display-giant-mobile": ["Plus Jakarta Sans"],
+            "overline": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-giant": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-giant-mobile": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+            "overline": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "800" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-brand-navy min-h-screen flex flex-col justify-between antialiased selection:bg-primary selection:text-white">
+<!-- Linear/Transactional Screen: Global BottomNavBar is intentionally suppressed per Semantic Shell rules -->
+<!-- Top Brand Hospital Affiliation Strip -->
+<header class="w-full bg-surface-card border-b border-border-subtle shadow-sm">
+<div class="max-w-md mx-auto px-margin py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-green-soft text-primary-container">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="local_hospital">local_hospital</span>
+</span>
+<span class="font-label-sm text-label-sm text-text-muted">
+          MTRH Outpatient Portal
+        </span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-brand-green-soft border border-primary-container/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold">Triage Live</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas Container -->
+<main class="w-full max-w-md mx-auto px-margin py-space-md flex-1 flex flex-col justify-center">
+<!-- Brand Identity Header -->
+<div class="flex flex-col items-center text-center mb-space-lg">
+<div class="relative mb-3">
+<!-- Logo Badge -->
+<div class="w-14 h-14 rounded-2xl bg-primary-container shadow-sm flex items-center justify-center border border-white/20">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="local_hospital" style="font-variation-settings: 'FILL' 1;">local_hospital</span>
+</div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-secondary text-white flex items-center justify-center border-2 border-surface-card shadow-xs">
+<span class="material-symbols-outlined text-xs leading-none" data-icon="schedule">schedule</span>
+</div>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-brand-navy tracking-tight font-extrabold">
+        AfyaQueue
+      </h1>
+<p class="font-body-md text-body-md text-text-muted mt-0.5">
+        Skip the wait. See a doctor.
+      </p>
+<!-- Hospital Badge Banner -->
+<div class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-blue-soft border border-secondary/15 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="domain">domain</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-normal">
+          Moi Teaching & Referral Hospital
+        </span>
+</div>
+</div>
+<!-- Login Card Surface -->
+<section class="bg-surface-card rounded-xl border border-border-subtle p-space-md shadow-sm">
+<!-- Welcome Copy -->
+<div class="mb-space-md text-left">
+<h2 class="font-headline-lg text-headline-lg text-brand-navy font-bold">
+          Welcome Back
+        </h2>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">
+          Sign in to access your queue tokens and clinic appointments
+        </p>
+</div>
+<!-- Role Selector Tabs -->
+<div class="mb-space-md">
+<div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-xl border border-border-subtle" role="tablist">
+<!-- Active Tab: Patient -->
+<button aria-selected="true" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-primary-container text-white font-label-md text-label-md shadow-xs transition-all duration-150" id="role-patient" onclick="switchRole('patient')" role="tab" type="button">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Patient</span>
+</button>
+<!-- Inactive Tab: Staff -->
+<button aria-selected="false" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md transition-all duration-150" id="role-staff" onclick="switchRole('staff')" role="tab" type="button">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="badge">badge</span>
+<span>Clinic Staff / Desk</span>
+</button>
+</div>
+<!-- Role Guidance Text -->
+<div class="mt-2 flex items-start gap-1.5 px-1">
+<span class="material-symbols-outlined text-text-muted text-xs mt-0.5" data-icon="info">info</span>
+<p class="font-body-sm text-body-sm text-text-muted" id="role-hint">
+            Patients access queue numbers & discovery • Staff access triage & queue desk
+          </p>
+</div>
+</div>
+<!-- Authentication Form -->
+<form action="#" class="space-y-space-md" method="POST" onsubmit="event.preventDefault();">
+<!-- Email or Reg Number Field -->
+<div>
+<label class="block font-label-sm text-label-sm text-brand-navy font-semibold uppercase tracking-wider mb-1" for="identifier">
+            Email or Hospital Reg Number
+          </label>
+<div class="relative rounded-xl border border-border-subtle bg-white focus-within:border-secondary focus-within:ring-2 focus-within:ring-secondary/15 transition-all">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-text-muted">
+<span class="material-symbols-outlined text-lg" data-icon="mail">mail</span>
+</div>
+<input autocomplete="username" class="w-full h-12 pl-10 pr-3.5 bg-transparent border-0 rounded-xl font-body-md text-body-md text-brand-navy placeholder-text-muted/70 focus:ring-0 focus:outline-none" id="identifier" name="identifier" placeholder="e.g. kevin.kibet@gmail.com or PT-2026-0142" required="" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div>
+<label class="block font-label-sm text-label-sm text-brand-navy font-semibold uppercase tracking-wider mb-1" for="password">
+            Password
+          </label>
+<div class="relative rounded-xl border border-border-subtle bg-white focus-within:border-secondary focus-within:ring-2 focus-within:ring-secondary/15 transition-all">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-text-muted">
+<span class="material-symbols-outlined text-lg" data-icon="lock">lock</span>
+</div>
+<input autocomplete="current-password" class="w-full h-12 pl-10 pr-10 bg-transparent border-0 rounded-xl font-body-md text-body-md text-brand-navy placeholder-text-muted/70 focus:ring-0 focus:outline-none" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-muted hover:text-brand-navy transition-colors" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="visibility" id="pwd-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Utility Row: Remember & Forgot -->
+<div class="flex items-center justify-between pt-0.5">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded border-border-subtle text-primary-container focus:ring-primary-container focus:ring-offset-0" id="remember" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-brand-navy">Remember this device</span>
+</label>
+<a class="font-label-md text-label-md text-secondary hover:underline transition-all" href="#">
+            Forgot password?
+          </a>
+</div>
+<!-- Terminal Primary Action Button (Brand Orange CTA) -->
+<button class="w-full h-12 rounded-xl bg-[#F27438] hover:bg-brand-accent-rust active:scale-[0.98] text-white font-label-lg text-label-lg font-bold shadow-md flex items-center justify-center gap-2 transition-all duration-150" type="submit">
+<span>Log In to AfyaQueue</span>
+<span class="material-symbols-outlined text-lg leading-none" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-space-md">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-border-subtle"></div>
+</div>
+<div class="relative flex justify-center text-xs">
+<span class="px-2.5 bg-surface-card text-text-muted font-label-sm text-label-sm">
+            QUICK ACCESS OPTIONS
+          </span>
+</div>
+</div>
+<!-- Biometric & M-Pesa Quick Log Option -->
+<button class="w-full p-2.5 rounded-xl border border-border-subtle hover:border-secondary/40 hover:bg-surface-container-low/50 active:scale-[0.99] flex items-center justify-between gap-3 text-left transition-all" type="button">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-brand-blue-soft text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-xl" data-icon="fingerprint">fingerprint</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-brand-navy font-bold leading-tight">
+              Biometrics / Phone Quick-Log
+            </div>
+<div class="font-body-sm text-body-sm text-text-muted leading-tight">
+              Kenya M-Pesa ID or TouchID bypass
+            </div>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-muted text-base" data-icon="chevron_right">chevron_right</span>
+</button>
+</section>
+<!-- Registration Link Footer -->
+<div class="text-center mt-space-md">
+<p class="font-body-sm text-body-sm text-text-muted">
+        Don't have an account? 
+        <a class="font-label-md text-label-md text-primary-container font-bold hover:underline ml-1" href="#">
+          Register new account
+        </a>
+</p>
+</div>
+<!-- Security, Compliance & Offline Banner -->
+<div class="mt-space-md pt-space-xs flex items-center justify-center gap-2 text-center text-text-muted">
+<span class="material-symbols-outlined text-xs text-primary-container" data-icon="verified_user">verified_user</span>
+<span class="font-label-sm text-label-sm tracking-tight text-text-muted">
+        Encrypted HIPAA / Data Protection Compliant • Offline Cached Session
+      </span>
+</div>
+</main>
+<!-- Interactive JavaScript for micro-interactions -->
+<script>
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('password');
+      const icon = document.getElementById('pwd-icon');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        pwdInput.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    function switchRole(role) {
+      const patientBtn = document.getElementById('role-patient');
+      const staffBtn = document.getElementById('role-staff');
+      const hint = document.getElementById('role-hint');
+      const identifierInput = document.getElementById('identifier');
+
+      if (role === 'patient') {
+        patientBtn.className = 'flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-primary-container text-white font-label-md text-label-md shadow-xs transition-all duration-150';
+        patientBtn.setAttribute('aria-selected', 'true');
+        patientBtn.innerHTML = '<span class="material-symbols-outlined text-sm leading-none" data-icon="check_circle" style="font-variation-settings: \'FILL\' 1;">check_circle</span><span>Patient</span>';
+
+        staffBtn.className = 'flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md transition-all duration-150';
+        staffBtn.setAttribute('aria-selected', 'false');
+        staffBtn.innerHTML = '<span class="material-symbols-outlined text-sm leading-none" data-icon="badge">badge</span><span>Clinic Staff / Desk</span>';
+
+        hint.textContent = 'Patients access queue numbers & discovery • Staff access triage & queue desk';
+        identifierInput.placeholder = 'e.g. kevin.kibet@gmail.com or PT-2026-0142';
+      } else {
+        staffBtn.className = 'flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-secondary text-white font-label-md text-label-md shadow-xs transition-all duration-150';
+        staffBtn.setAttribute('aria-selected', 'true');
+        staffBtn.innerHTML = '<span class="material-symbols-outlined text-sm leading-none" data-icon="check_circle" style="font-variation-settings: \'FILL\' 1;">check_circle</span><span>Clinic Staff / Desk</span>';
+
+        patientBtn.className = 'flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-text-muted hover:text-brand-navy font-label-md text-label-md transition-all duration-150';
+        patientBtn.setAttribute('aria-selected', 'false');
+        patientBtn.innerHTML = '<span class="material-symbols-outlined text-sm leading-none" data-icon="person">person</span><span>Patient</span>';
+
+        hint.textContent = 'Staff Portal: Moi Teaching & Referral Hospital Triage & Outpatient Control';
+        identifierInput.placeholder = 'Staff ID: e.g. MTRH-NURSE-0419 or dr.mwangi@mtrh.go.ke';
+      }
+    }
+  </script>
+</body></html>
