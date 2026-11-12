@@ -169,7 +169,7 @@ export default function DiscoverScreen() {
             />
           </View>
           <PressableScale
-            onPress={() => router.push('/appointments/index')}
+            onPress={() => router.push('/appointments')}
             style={styles.filterBtn}
             accessibilityLabel="Filter specialists">
             <Icon name="tune" size={20} color={colors.brandNavy} />

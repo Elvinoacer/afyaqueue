@@ -1,0 +1,309 @@
+rules_version = '2';
+
+// ===============================================================
+// AfyaQueue Cloud Firestore Security Rules
+// ===============================================================
+//
+// Assumed Data Model:
+//
+// Collection: users/{userId}
+//   - uid: string (required, matches userId)
+//   - name: string (required, 2-100 chars)
+//   - role: string (required, 'patient' | 'staff')
+//   - email: string (required)
+//   - phone: string (required)
+//   - patientRegNo: string (optional)
+//   - facility: string (optional)
+//   - notificationSettings: map (optional)
+//   - expoPushToken: string (optional)
+//   - createdAt: number (required)
+//   - updatedAt: number (optional)
+//
+// Collection: registry/{regNo}
+//   - regNo: string (required)
+//   - patientName: string (required)
+//   - phone: string (required)
+//   - uid: string (optional)
+//
+// Collection: doctors/{doctorId}
+//   - id: string (required)
+//   - name: string (required)
+//   - specialty: string (required)
+//   - facility: string (required)
+//   - availableSlots: list (required)
+//   - avgConsultationMins: number (required, >= 1)
+//   - rating: number (optional, 1.0-5.0)
+//   - reviewCount: number (optional, >= 0)
+//   - lastRatingId: string (optional)
+//   - createdAt: number (required)
+//
+// Collection: queueStatus/{queueId} (${doctorId}_${date})
+//   - doctorId: string (required)
+//   - date: string (required, YYYY-MM-DD)
+//   - lastIssuedNumber: number (required, >= 0)
+//   - nowServing: number (required, >= 0)
+//   - bookedSlots: map (optional, timeSlot -> appointmentId)
+//   - lastUpdatedAt: number (optional)
+//
+// Collection: appointments/{appointmentId}
+//   - id: string (required)
+//   - patientId: string (required)
+//   - patientName: string (required)
+//   - doctorId: string (required)
+//   - doctorName: string (required)
+//   - doctorSpecialty: string (required)
+//   - facility: string (required)
+//   - date: string (required, YYYY-MM-DD)
+//   - timeSlot: string (required)
+//   - queueNumber: number (required, >= 1)
+//   - status: string (required, 'upcoming' | 'completed' | 'cancelled')
+//   - notes: string (optional)
+//   - cancelReason: string (optional)
+//   - createdAt: number (required)
+//   - updatedAt: number (optional)
+//
+// Collection: announcements/{announcementId}
+//   - id: string (required)
+//   - text: string (required, 1-500 chars)
+//   - urgency: string (required, 'normal' | 'urgent')
+//   - postedBy: string (required)
+//   - postedByRole: string (optional)
+//   - createdAt: number (required)
+//
+// Collection: ratings/{ratingId}
+//   - id: string (required)
+//   - doctorId: string (required)
+//   - patientId: string (required, matches auth.uid)
+//   - stars: number (required, 1-5)
+//   - comment: string (optional)
+//   - createdAt: number (required)
+//
+// Collection: medicalRecords/{recordId}
+//   - id: string (required)
+//   - patientId: string (required)
+//   - doctorName: string (required)
+//   - specialty: string (required)
+//   - facility: string (required)
+//   - date: string (required)
+//   - diagnosis: string (required)
+//   - prescriptions: list (required)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isStaff() {
+      return isAuthenticated() && (
+        request.auth.token.get('role', '') == 'staff' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'staff')
+      );
+    }
+
+    function isValidUser(data) {
+      return data.uid is string &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 100 &&
+             data.role in ['patient', 'staff'] &&
+             data.email is string &&
+             data.phone is string &&
+             data.createdAt is number;
+    }
+
+    function isValidDoctor(data) {
+      return data.id is string &&
+             data.name is string && data.name.size() >= 2 &&
+             data.specialty is string &&
+             data.facility is string &&
+             data.availableSlots is list &&
+             data.avgConsultationMins is number && data.avgConsultationMins >= 1 &&
+             data.createdAt is number;
+    }
+
+    function isValidAppointment(data) {
+      return data.id is string &&
+             data.patientId is string &&
+             data.patientName is string &&
+             data.doctorId is string &&
+             data.date is string &&
+             data.timeSlot is string &&
+             data.queueNumber is number && data.queueNumber >= 1 &&
+             data.status in ['upcoming', 'completed', 'cancelled'] &&
+             data.createdAt is number;
+    }
+
+    function isValidQueueStatus(data) {
+      return data.doctorId is string &&
+             data.date is string &&
+             data.lastIssuedNumber is number && data.lastIssuedNumber >= 0 &&
+             data.nowServing is number && data.nowServing >= 0;
+    }
+
+    // -------------------------------------------------------------
+    // Users Collection
+    // -------------------------------------------------------------
+    match /users/{userId} {
+      // Patient reads own profile; Staff can read patient profiles for desk triage
+      allow read: if isAuthenticated() && (isOwner(userId) || isStaff());
+
+      // User creates own profile during registration
+      allow create: if isOwner(userId) &&
+                       isValidUser(request.resource.data) &&
+                       request.resource.data.uid == userId;
+
+      // User updates own profile; UID and role remain immutable for non-staff
+      allow update: if isAuthenticated() && (
+        (isOwner(userId) &&
+         request.resource.data.uid == resource.data.uid &&
+         request.resource.data.role == resource.data.role) ||
+        isStaff()
+      );
+
+      // Staff only can delete accounts
+      allow delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Patient Registry Collection (Hospital Master Index)
+    // -------------------------------------------------------------
+    match /registry/{regNo} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Doctors Collection
+    // -------------------------------------------------------------
+    match /doctors/{doctorId} {
+      // All authenticated users can browse doctors
+      allow read: if isAuthenticated();
+
+      // Only staff can add doctors
+      allow create: if isStaff() && isValidDoctor(request.resource.data);
+
+      // Staff can edit doctor profile; Patients can atomically increment rating/reviewCount
+      allow update: if isStaff() || (
+        isAuthenticated() &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rating', 'reviewCount', 'lastRatingId']) &&
+        request.resource.data.reviewCount == resource.data.reviewCount + 1 &&
+        request.resource.data.rating is number &&
+        request.resource.data.rating >= 1 &&
+        request.resource.data.rating <= 5
+      );
+
+      allow delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Appointments Collection
+    // -------------------------------------------------------------
+    match /appointments/{appointmentId} {
+      // Patients read own appointments; Staff can read all
+      allow read: if isAuthenticated() && (
+        resource.data.patientId == request.auth.uid || isStaff()
+      );
+
+      // Patient books for themselves (upcoming only), or staff books
+      allow create: if isAuthenticated() &&
+                       isValidAppointment(request.resource.data) && (
+                         (request.resource.data.patientId == request.auth.uid && request.resource.data.status == 'upcoming') ||
+                         isStaff()
+                       );
+
+      // Patient can cancel their own upcoming appointment; Staff can update status & details
+      allow update: if isAuthenticated() && (
+        (resource.data.patientId == request.auth.uid &&
+         request.resource.data.patientId == resource.data.patientId &&
+         request.resource.data.doctorId == resource.data.doctorId &&
+         request.resource.data.queueNumber == resource.data.queueNumber &&
+         request.resource.data.status == 'cancelled') ||
+        isStaff()
+      );
+
+      allow delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Live Queue Status Collection
+    // -------------------------------------------------------------
+    match /queueStatus/{queueId} {
+      // Public to all authenticated users for real-time queue boards & wait-time displays
+      allow read: if isAuthenticated();
+
+      // Staff initializes queue, OR patient booking initializes if day's first token
+      allow create: if isAuthenticated() &&
+                       isValidQueueStatus(request.resource.data) && (
+                         isStaff() ||
+                         (request.resource.data.lastIssuedNumber == 1 && request.resource.data.nowServing == 0)
+                       );
+
+      // Patient increments lastIssuedNumber by exactly 1 on booking;
+      // Patient releases a booked slot on cancellation (lastIssuedNumber & nowServing unchanged);
+      // Staff calls/skips/updates
+      allow update: if isAuthenticated() && (
+        (request.resource.data.lastIssuedNumber == resource.data.lastIssuedNumber + 1 &&
+         request.resource.data.nowServing == resource.data.nowServing &&
+         request.resource.data.doctorId == resource.data.doctorId &&
+         request.resource.data.date == resource.data.date) ||
+        (request.resource.data.lastIssuedNumber == resource.data.lastIssuedNumber &&
+         request.resource.data.nowServing == resource.data.nowServing &&
+         request.resource.data.doctorId == resource.data.doctorId &&
+         request.resource.data.date == resource.data.date &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['bookedSlots', 'lastUpdatedAt'])) ||
+        isStaff()
+      );
+
+      allow delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Announcements Collection
+    // -------------------------------------------------------------
+    match /announcements/{announcementId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Doctor Ratings Collection
+    // -------------------------------------------------------------
+    match /ratings/{ratingId} {
+      allow read: if isAuthenticated();
+
+      // Patient creates their own verified rating
+      allow create: if isAuthenticated() &&
+                       request.resource.data.patientId == request.auth.uid &&
+                       request.resource.data.stars is number &&
+                       request.resource.data.stars >= 1 &&
+                       request.resource.data.stars <= 5 &&
+                       request.resource.data.createdAt is number;
+
+      allow update, delete: if isStaff();
+    }
+
+    // -------------------------------------------------------------
+    // Medical Records Collection
+    // -------------------------------------------------------------
+    match /medicalRecords/{recordId} {
+      // Patient reads own medical history; Staff has clinical access
+      allow read: if isAuthenticated() && (
+        resource.data.patientId == request.auth.uid || isStaff()
+      );
+
+      // Only staff/clinicians can create or modify medical records
+      allow create, update, delete: if isStaff();
+    }
+  }
+}

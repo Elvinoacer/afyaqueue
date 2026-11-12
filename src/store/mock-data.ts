@@ -8,13 +8,26 @@ import type {
   User,
 } from '@/types/models';
 
+const isScriptRuntime =
+  typeof process !== 'undefined' &&
+  (Boolean(process.versions?.bun) || (Boolean(process.versions?.node) && !(globalThis as any).expo));
+
+function loadAsset(assetKey: string, loader: () => any) {
+  if (isScriptRuntime) return assetKey;
+  try {
+    return loader();
+  } catch {
+    return assetKey;
+  }
+}
+
 export const DOCTOR_IMAGES: Record<string, any> = {
-  'doc-sarah-wanjiku': require('@/assets/images/doctors/sarah-wanjiku.jpg'),
-  'doc-sarah-profile': require('@/assets/images/doctors/sarah-wanjiku-profile.jpg'),
-  'doc-sarah-queue': require('@/assets/images/doctors/sarah-wanjiku-queue.jpg'),
-  'doc-david-kiprono': require('@/assets/images/doctors/david-kiprono.jpg'),
-  'doc-amina-hassan': require('@/assets/images/doctors/amina-hassan.jpg'),
-  'doc-joseph-omondi': require('@/assets/images/doctors/joseph-omondi.jpg'),
+  'doc-sarah-wanjiku': loadAsset('doc-sarah-wanjiku', () => require('@/assets/images/doctors/sarah-wanjiku.jpg')),
+  'doc-sarah-profile': loadAsset('doc-sarah-profile', () => require('@/assets/images/doctors/sarah-wanjiku-profile.jpg')),
+  'doc-sarah-queue': loadAsset('doc-sarah-queue', () => require('@/assets/images/doctors/sarah-wanjiku-queue.jpg')),
+  'doc-david-kiprono': loadAsset('doc-david-kiprono', () => require('@/assets/images/doctors/david-kiprono.jpg')),
+  'doc-amina-hassan': loadAsset('doc-amina-hassan', () => require('@/assets/images/doctors/amina-hassan.jpg')),
+  'doc-joseph-omondi': loadAsset('doc-joseph-omondi', () => require('@/assets/images/doctors/joseph-omondi.jpg')),
 };
 
 export const INITIAL_PATIENT_USER: User = {

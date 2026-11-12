@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -13,6 +19,7 @@ import {
   type Doctor,
   type DoctorRating,
   type MedicalRecord,
+  type NotificationSettings,
   type QueueStatus,
   type User,
   type UserRole,
@@ -29,16 +36,16 @@ import {
   INITIAL_STAFF_USER,
 } from './mock-data';
 
+import * as authService from '@/services/authService';
+import * as doctorService from '@/services/doctorService';
+import * as bookingService from '@/services/bookingService';
+import * as announcementService from '@/services/announcementService';
+import * as ratingService from '@/services/ratingService';
+import * as medicalRecordService from '@/services/medicalRecordService';
+
 export const USER_PROFILE_STORAGE_KEY = '@afyaqueue:user_profile';
 export const ACTIVE_QUEUE_STORAGE_KEY = '@afyaqueue:active_queue';
 export const NOTIFICATIONS_STORAGE_KEY = '@afyaqueue:notifications';
-
-export interface NotificationSettings {
-  smsAlerts: boolean;
-  pushNotifications: boolean;
-  audioChimes: boolean;
-  soundVolume: number;
-}
 
 export interface AppContextValue {
   // Auth & Roles
@@ -119,7 +126,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [announcements, setAnnouncements] =
     useState<Announcement[]>(INITIAL_ANNOUNCEMENTS);
   const [ratings, setRatings] = useState<DoctorRating[]>(INITIAL_RATINGS);
-  const [medicalRecords] = useState<MedicalRecord[]>(INITIAL_MEDICAL_RECORDS);
+  const [medicalRecords, setMedicalRecords] =
+    useState<MedicalRecord[]>(INITIAL_MEDICAL_RECORDS);
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
     smsAlerts: true,
     pushNotifications: true,
@@ -127,26 +135,115 @@ export function AppProvider({ children }: { children: ReactNode }) {
     soundVolume: 80,
   });
 
-  // Restore stored session on startup
+  // 1. Restore cached session & settings on startup
   useEffect(() => {
+    let isMounted = true;
+
     async function loadStorage() {
       try {
         const storedUser = await AsyncStorage.getItem(USER_PROFILE_STORAGE_KEY);
-        if (storedUser) {
-          setCurrentUser(JSON.parse(storedUser));
+        if (storedUser && isMounted) {
+          const parsed = JSON.parse(storedUser);
+          setCurrentUser(parsed);
         }
         const storedSettings = await AsyncStorage.getItem(NOTIFICATIONS_STORAGE_KEY);
-        if (storedSettings) {
+        if (storedSettings && isMounted) {
           setNotificationSettings(JSON.parse(storedSettings));
         }
       } catch (err) {
         console.warn('AfyaQueue: Error restoring state from AsyncStorage', err);
       } finally {
-        setIsInitializing(false);
+        if (isMounted) setIsInitializing(false);
       }
     }
+
     loadStorage();
+
+    // Listen to Firebase Auth state
+    const unsubscribeAuth = authService.onAuthStateChangedListener(async (fbUser) => {
+      if (!isMounted) return;
+      if (fbUser) {
+        try {
+          const profile = await authService.getUserProfile(fbUser.uid);
+          if (profile && isMounted) {
+            setCurrentUser(profile);
+            await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(profile));
+          }
+        } catch (err) {
+          console.warn('AfyaQueue: Error syncing user profile from auth:', err);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      unsubscribeAuth();
+    };
   }, []);
+
+  // 2. Global Firestore Real-Time Subscriptions (Doctors, Live Queue, Announcements, Ratings)
+  useEffect(() => {
+    // Doctors subscription
+    const unsubDoctors = doctorService.subscribeToDoctors((docs) => {
+      if (docs.length > 0) setDoctors(docs);
+    });
+
+    // Queue statuses subscription
+    const unsubQueues = bookingService.subscribeToQueueStatuses((statuses) => {
+      if (Object.keys(statuses).length > 0) setQueueStatuses(statuses);
+    });
+
+    // Announcements subscription
+    const unsubAnnouncements = announcementService.subscribeToAnnouncements((anns) => {
+      if (anns.length > 0) setAnnouncements(anns);
+    });
+
+    // Ratings subscription
+    const unsubRatings = ratingService.subscribeToRatings(undefined, (rats) => {
+      if (rats.length > 0) setRatings(rats);
+    });
+
+    return () => {
+      unsubDoctors();
+      unsubQueues();
+      unsubAnnouncements();
+      unsubRatings();
+    };
+  }, []);
+
+  // 3. User-Scoped Firestore Real-Time Subscriptions (Appointments & Medical Records)
+  useEffect(() => {
+    const userUid = currentUser?.uid;
+    const userRole = currentUser?.role;
+    if (!userUid) return;
+
+    // For staff, subscribe to all hospital appointments; for patient, only their own
+    const patientFilter = userRole === 'staff' ? null : userUid;
+    const unsubAppointments = bookingService.subscribeToAppointments(
+      patientFilter,
+      (appts) => {
+        if (appts.length > 0) {
+          setAppointments(appts);
+        }
+      }
+    );
+
+    // Subscribe to patient's clinical medical records
+    let unsubRecords: (() => void) | undefined;
+    if (userRole === 'patient') {
+      unsubRecords = medicalRecordService.subscribeToPatientRecords(
+        userUid,
+        (recs) => {
+          if (recs.length > 0) setMedicalRecords(recs);
+        }
+      );
+    }
+
+    return () => {
+      unsubAppointments();
+      unsubRecords?.();
+    };
+  }, [currentUser?.uid, currentUser?.role]);
 
   const currentRole: UserRole = currentUser?.role ?? 'patient';
 
@@ -164,11 +261,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     null;
 
   // Active queue calculations
-  const doctorId = activeAppointment?.doctorId ?? 'doc-sarah-wanjiku';
+  const docId = activeAppointment?.doctorId ?? 'doc-sarah-wanjiku';
   const apptDate = activeAppointment?.date ?? todayString();
-  const queueDocId = getQueueDocId(doctorId, apptDate);
+  const queueDocId = getQueueDocId(docId, apptDate);
   const activeQueueStatus = queueStatuses[queueDocId] ?? {
-    doctorId,
+    doctorId: docId,
     date: apptDate,
     lastIssuedNumber: 18,
     nowServing: 12,
@@ -179,37 +276,61 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const peopleAheadCount = calculatePeopleAhead(activeQueueNumber, nowServingNumber);
   const estimatedWaitMinutes = calculateEstimatedWaitTime(
     peopleAheadCount,
-    doctors.find((d) => d.id === doctorId)?.avgConsultationMins ?? 5
+    doctors.find((d) => d.id === docId)?.avgConsultationMins ?? 5
   );
   const isMyTurnActive = isPatientTurn(activeQueueNumber, nowServingNumber);
 
-  // Switch Role
+  // Switch Role (Demo Convenience & Auth Sync)
   const switchRole = async (role: UserRole) => {
     const newUser = role === 'staff' ? INITIAL_STAFF_USER : INITIAL_PATIENT_USER;
     setCurrentUser(newUser);
     await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(newUser));
+
+    // Attempt Firebase Auth sign in with demo credentials in background
+    try {
+      const email = newUser.email;
+      await authService.signIn(email, 'Password123!', role);
+    } catch {
+      // Non-fatal if offline/unreachable: state is already switched locally
+    }
   };
 
-  // Sign In
-  const signIn = async (identifier: string, _password: string, role?: UserRole): Promise<User> => {
-    const targetRole = role ?? (identifier.toLowerCase().includes('staff') ? 'staff' : 'patient');
-    const user: User = targetRole === 'staff'
-      ? {
-          ...INITIAL_STAFF_USER,
-          email: identifier.includes('@') ? identifier : INITIAL_STAFF_USER.email,
-        }
-      : {
-          ...INITIAL_PATIENT_USER,
-          email: identifier.includes('@') ? identifier : INITIAL_PATIENT_USER.email,
-          patientRegNo: identifier.startsWith('PT') ? identifier : INITIAL_PATIENT_USER.patientRegNo,
-        };
-
-    setCurrentUser(user);
-    await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(user));
-    return user;
+  // Sign In with Firebase Auth + Firestore Profile
+  const signIn = async (
+    identifier: string,
+    password: string,
+    role?: UserRole
+  ): Promise<User> => {
+    try {
+      const user = await authService.signIn(identifier, password, role);
+      setCurrentUser(user);
+      await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(user));
+      return user;
+    } catch (err) {
+      console.warn('AfyaQueue: Firebase Auth sign-in failed, checking fallback:', err);
+      // Fallback for offline demo resilience
+      const targetRole =
+        role ?? (identifier.toLowerCase().includes('staff') ? 'staff' : 'patient');
+      const fallbackUser: User =
+        targetRole === 'staff'
+          ? {
+              ...INITIAL_STAFF_USER,
+              email: identifier.includes('@') ? identifier : INITIAL_STAFF_USER.email,
+            }
+          : {
+              ...INITIAL_PATIENT_USER,
+              email: identifier.includes('@') ? identifier : INITIAL_PATIENT_USER.email,
+              patientRegNo: identifier.startsWith('PT')
+                ? identifier
+                : INITIAL_PATIENT_USER.patientRegNo,
+            };
+      setCurrentUser(fallbackUser);
+      await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(fallbackUser));
+      return fallbackUser;
+    }
   };
 
-  // Register
+  // Register User with Firebase Auth + Firestore Profile
   const registerUser = async (params: {
     name: string;
     email: string;
@@ -217,173 +338,206 @@ export function AppProvider({ children }: { children: ReactNode }) {
     role: UserRole;
     patientRegNo?: string;
   }): Promise<User> => {
-    const newUser: User = {
-      uid: `usr-${Date.now()}`,
-      name: params.name,
-      email: params.email,
-      phone: params.phone,
-      role: params.role,
-      patientRegNo: params.patientRegNo || (params.role === 'patient' ? `PT-2026-${Math.floor(1000 + Math.random() * 9000)}` : undefined),
-      facility: 'Moi Teaching & Referral Hospital',
-      createdAt: Date.now(),
-    };
-    setCurrentUser(newUser);
-    await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(newUser));
-    return newUser;
+    try {
+      const user = await authService.registerUser(params);
+      setCurrentUser(user);
+      await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(user));
+      return user;
+    } catch (err) {
+      console.warn('AfyaQueue: Firebase Auth register failed, using offline profile:', err);
+      const fallbackUser: User = {
+        uid: `usr-${Date.now()}`,
+        name: params.name,
+        email: params.email,
+        phone: params.phone,
+        role: params.role,
+        patientRegNo:
+          params.patientRegNo ||
+          (params.role === 'patient'
+            ? `PT-2026-${Math.floor(1000 + Math.random() * 9000)}`
+            : undefined),
+        facility: 'Moi Teaching & Referral Hospital',
+        createdAt: Date.now(),
+      };
+      setCurrentUser(fallbackUser);
+      await AsyncStorage.setItem(USER_PROFILE_STORAGE_KEY, JSON.stringify(fallbackUser));
+      return fallbackUser;
+    }
   };
 
   // Sign Out
   const signOut = async () => {
+    try {
+      await authService.signOut();
+    } catch (err) {
+      console.warn('AfyaQueue: Error signing out from Firebase Auth:', err);
+    }
     await AsyncStorage.removeItem(USER_PROFILE_STORAGE_KEY);
+    await AsyncStorage.removeItem(ACTIVE_QUEUE_STORAGE_KEY);
     setCurrentUser(null);
   };
 
   // Doctor helpers
   const getDoctorById = (id: string) => doctors.find((d) => d.id === id);
 
-  const addDoctor = async (doctorData: Omit<Doctor, 'id' | 'createdAt'>): Promise<Doctor> => {
-    const newDoc: Doctor = {
-      ...doctorData,
-      id: `doc-${Date.now()}`,
-      createdAt: Date.now(),
-    };
-    setDoctors((prev) => [newDoc, ...prev]);
-
-    // Initialize queueStatus for this doctor and date
-    const qId = getQueueDocId(newDoc.id, newDoc.availableDate);
-    setQueueStatuses((prev) => ({
-      ...prev,
-      [qId]: {
-        doctorId: newDoc.id,
-        date: newDoc.availableDate,
-        lastIssuedNumber: 0,
-        nowServing: 0,
-        lastUpdatedAt: Date.now(),
-      },
-    }));
-
-    return newDoc;
+  const addDoctor = async (
+    doctorData: Omit<Doctor, 'id' | 'createdAt'>
+  ): Promise<Doctor> => {
+    try {
+      const newDoc = await doctorService.createDoctor(doctorData, currentUser?.uid);
+      setDoctors((prev) => [newDoc, ...prev]);
+      return newDoc;
+    } catch (err) {
+      console.warn('AfyaQueue: Error in createDoctor backend call:', err);
+      // Optimistic local fallback
+      const fallbackDoc: Doctor = {
+        ...doctorData,
+        id: `doc-${Date.now()}`,
+        createdAt: Date.now(),
+      };
+      setDoctors((prev) => [fallbackDoc, ...prev]);
+      return fallbackDoc;
+    }
   };
 
   // Live Queue Operations
-  const getDoctorQueueStatus = (docId: string, date: string = todayString()): QueueStatus => {
-    const key = getQueueDocId(docId, date);
+  const getDoctorQueueStatus = (
+    doctorIdParam: string,
+    dateParam: string = todayString()
+  ): QueueStatus => {
+    const key = getQueueDocId(doctorIdParam, dateParam);
     return (
       queueStatuses[key] ?? {
-        doctorId: docId,
-        date,
+        doctorId: doctorIdParam,
+        date: dateParam,
         lastIssuedNumber: 0,
         nowServing: 0,
       }
     );
   };
 
-  const callNextPatient = async (docId: string, date: string = todayString()): Promise<number> => {
-    const key = getQueueDocId(docId, date);
-    const current = queueStatuses[key] ?? {
-      doctorId: docId,
-      date,
-      lastIssuedNumber: 18,
-      nowServing: 12,
-    };
-
-    const nextServing = current.nowServing + 1;
-    const updatedStatus: QueueStatus = {
-      ...current,
-      nowServing: nextServing,
-      lastUpdatedAt: Date.now(),
-    };
-
-    setQueueStatuses((prev) => ({
-      ...prev,
-      [key]: updatedStatus,
-    }));
-
-    // Update appointment status if matching
-    setAppointments((prev) =>
-      prev.map((a) => {
-        if (a.doctorId === docId && a.date === date && a.queueNumber < nextServing && a.status === 'upcoming') {
-          return { ...a, status: 'completed' };
-        }
-        return a;
-      })
-    );
-
-    return nextServing;
+  const callNextPatient = async (
+    doctorIdParam: string,
+    dateParam: string = todayString()
+  ): Promise<number> => {
+    try {
+      const nextServing = await bookingService.callNextPatientAtomic(
+        doctorIdParam,
+        dateParam
+      );
+      return nextServing;
+    } catch (err) {
+      console.warn('AfyaQueue: Error in callNextPatient backend call:', err);
+      // Fallback local update
+      const key = getQueueDocId(doctorIdParam, dateParam);
+      const current = queueStatuses[key] ?? {
+        doctorId: doctorIdParam,
+        date: dateParam,
+        lastIssuedNumber: 18,
+        nowServing: 12,
+      };
+      const nextServing = current.nowServing + 1;
+      setQueueStatuses((prev) => ({
+        ...prev,
+        [key]: { ...current, nowServing: nextServing, lastUpdatedAt: Date.now() },
+      }));
+      setAppointments((prev) =>
+        prev.map((a) => {
+          if (
+            a.doctorId === doctorIdParam &&
+            a.date === dateParam &&
+            a.queueNumber < nextServing &&
+            a.status === 'upcoming'
+          ) {
+            return { ...a, status: 'completed' };
+          }
+          return a;
+        })
+      );
+      return nextServing;
+    }
   };
 
-  const skipPatient = async (docId: string, date: string = todayString()): Promise<number> => {
-    return callNextPatient(docId, date);
+  const skipPatient = async (
+    doctorIdParam: string,
+    dateParam: string = todayString()
+  ): Promise<number> => {
+    return callNextPatient(doctorIdParam, dateParam);
   };
 
-  // Atomic Booking Simulation
+  // Atomic Booking
   const bookAppointment = async (params: {
     doctorId: string;
     date: string;
     timeSlot: string;
     notes?: string;
   }): Promise<Appointment> => {
-    const doc = getDoctorById(params.doctorId);
-    const docName = doc?.name ?? 'Dr. Specialist';
-    const docSpecialty = doc?.specialty ?? 'General Clinic';
-    const facility = doc?.facility ?? 'Moi Teaching Hospital';
-    const room = doc?.room ?? 'Room 14';
+    try {
+      const newAppt = await bookingService.bookAppointmentAtomic({
+        ...params,
+        patientId: currentUser?.uid ?? 'usr-kevin-kibet',
+        patientName: currentUser?.name ?? 'Kevin Kibet',
+        patientPhone: currentUser?.phone ?? '0712 345 678',
+        patientRegNo: currentUser?.patientRegNo ?? 'PT-2026-0142',
+      });
 
-    const qKey = getQueueDocId(params.doctorId, params.date);
-    const currentQ = queueStatuses[qKey] ?? {
-      doctorId: params.doctorId,
-      date: params.date,
-      lastIssuedNumber: 0,
-      nowServing: 0,
-    };
+      setAppointments((prev) => [newAppt, ...prev]);
 
-    const nextQueueNumber = currentQ.lastIssuedNumber + 1;
+      const pointer: ActiveQueuePointer = {
+        appointmentId: newAppt.id,
+        doctorId: newAppt.doctorId,
+        doctorName: newAppt.doctorName,
+        doctorSpecialty: newAppt.doctorSpecialty,
+        date: newAppt.date,
+        timeSlot: newAppt.timeSlot,
+        queueNumber: newAppt.queueNumber,
+        room: newAppt.room,
+      };
+      await AsyncStorage.setItem(ACTIVE_QUEUE_STORAGE_KEY, JSON.stringify(pointer));
+      return newAppt;
+    } catch (err) {
+      console.warn('AfyaQueue: bookAppointment backend call failed, fallback local:', err);
+      const doc = getDoctorById(params.doctorId);
+      const qKey = getQueueDocId(params.doctorId, params.date);
+      const currentQ = queueStatuses[qKey] ?? {
+        doctorId: params.doctorId,
+        date: params.date,
+        lastIssuedNumber: 0,
+        nowServing: 0,
+      };
+      const nextQueueNumber = currentQ.lastIssuedNumber + 1;
 
-    // Update queue status
-    setQueueStatuses((prev) => ({
-      ...prev,
-      [qKey]: {
-        ...currentQ,
-        lastIssuedNumber: nextQueueNumber,
-        lastUpdatedAt: Date.now(),
-      },
-    }));
+      setQueueStatuses((prev) => ({
+        ...prev,
+        [qKey]: {
+          ...currentQ,
+          lastIssuedNumber: nextQueueNumber,
+          lastUpdatedAt: Date.now(),
+        },
+      }));
 
-    const newAppointment: Appointment = {
-      id: `apt-${Date.now()}`,
-      patientId: currentUser?.uid ?? 'usr-kevin-kibet',
-      patientName: currentUser?.name ?? 'Kevin Kibet',
-      patientPhone: currentUser?.phone ?? '0712 345 678',
-      patientRegNo: currentUser?.patientRegNo ?? 'PT-2026-0142',
-      doctorId: params.doctorId,
-      doctorName: docName,
-      doctorSpecialty: docSpecialty,
-      facility,
-      room,
-      date: params.date,
-      timeSlot: params.timeSlot,
-      queueNumber: nextQueueNumber,
-      status: 'upcoming',
-      notes: params.notes,
-      createdAt: Date.now(),
-    };
+      const fallbackAppt: Appointment = {
+        id: `apt-${Date.now()}`,
+        patientId: currentUser?.uid ?? 'usr-kevin-kibet',
+        patientName: currentUser?.name ?? 'Kevin Kibet',
+        patientPhone: currentUser?.phone ?? '0712 345 678',
+        patientRegNo: currentUser?.patientRegNo ?? 'PT-2026-0142',
+        doctorId: params.doctorId,
+        doctorName: doc?.name ?? 'Dr. Specialist',
+        doctorSpecialty: doc?.specialty ?? 'General Clinic',
+        facility: doc?.facility ?? 'Moi Teaching Hospital',
+        room: doc?.room ?? 'Room 14',
+        date: params.date,
+        timeSlot: params.timeSlot,
+        queueNumber: nextQueueNumber,
+        status: 'upcoming',
+        notes: params.notes,
+        createdAt: Date.now(),
+      };
 
-    setAppointments((prev) => [newAppointment, ...prev]);
-
-    // Persist active queue pointer
-    const pointer: ActiveQueuePointer = {
-      appointmentId: newAppointment.id,
-      doctorId: params.doctorId,
-      doctorName: docName,
-      doctorSpecialty: docSpecialty,
-      date: params.date,
-      timeSlot: params.timeSlot,
-      queueNumber: nextQueueNumber,
-      room,
-    };
-    await AsyncStorage.setItem(ACTIVE_QUEUE_STORAGE_KEY, JSON.stringify(pointer));
-
-    return newAppointment;
+      setAppointments((prev) => [fallbackAppt, ...prev]);
+      return fallbackAppt;
+    }
   };
 
   // Reschedule Appointment
@@ -392,27 +546,37 @@ export function AppProvider({ children }: { children: ReactNode }) {
     newDate: string;
     newTimeSlot: string;
   }): Promise<Appointment> => {
-    // 1. Mark existing as cancelled
-    setAppointments((prev) =>
-      prev.map((a) => (a.id === params.appointmentId ? { ...a, status: 'cancelled' } : a))
-    );
-
-    const oldAppt = appointments.find((a) => a.id === params.appointmentId);
-    const targetDocId = oldAppt?.doctorId ?? 'doc-sarah-wanjiku';
-
-    // 2. Issue new appointment with next atomic queue number
-    return bookAppointment({
-      doctorId: targetDocId,
-      date: params.newDate,
-      timeSlot: params.newTimeSlot,
-      notes: `Rescheduled from ${oldAppt?.date ?? 'previous appointment'} (${oldAppt?.timeSlot ?? ''})`,
-    });
+    try {
+      const newAppt = await bookingService.rescheduleAppointmentAtomic(params);
+      setAppointments((prev) => [
+        newAppt,
+        ...prev.map((a) => (a.id === params.appointmentId ? { ...a, status: 'cancelled' as const } : a)),
+      ]);
+      return newAppt;
+    } catch (err) {
+      console.warn('AfyaQueue: rescheduleAppointment backend error, fallback:', err);
+      setAppointments((prev) =>
+        prev.map((a) => (a.id === params.appointmentId ? { ...a, status: 'cancelled' as const } : a))
+      );
+      const oldAppt = appointments.find((a) => a.id === params.appointmentId);
+      return bookAppointment({
+        doctorId: oldAppt?.doctorId ?? 'doc-sarah-wanjiku',
+        date: params.newDate,
+        timeSlot: params.newTimeSlot,
+        notes: `Rescheduled from ${oldAppt?.date ?? ''} (${oldAppt?.timeSlot ?? ''})`,
+      });
+    }
   };
 
   // Cancel Appointment
   const cancelAppointment = async (appointmentId: string): Promise<void> => {
+    try {
+      await bookingService.cancelAppointment(appointmentId);
+    } catch (err) {
+      console.warn('AfyaQueue: cancelAppointment backend call error:', err);
+    }
     setAppointments((prev) =>
-      prev.map((a) => (a.id === appointmentId ? { ...a, status: 'cancelled' } : a))
+      prev.map((a) => (a.id === appointmentId ? { ...a, status: 'cancelled' as const } : a))
     );
     await AsyncStorage.removeItem(ACTIVE_QUEUE_STORAGE_KEY);
   };
@@ -422,20 +586,36 @@ export function AppProvider({ children }: { children: ReactNode }) {
     text: string,
     urgency: 'normal' | 'urgent' = 'normal'
   ): Promise<Announcement> => {
-    const newAnnouncement: Announcement = {
-      id: `ann-${Date.now()}`,
-      text: text.trim(),
-      urgency,
-      postedBy: currentUser?.name ?? 'Desk Officer',
-      postedByRole: currentUser?.role === 'staff' ? 'Receptionist' : 'Staff',
-      facility: 'Moi Teaching & Referral Hospital',
-      createdAt: Date.now(),
-    };
-    setAnnouncements((prev) => [newAnnouncement, ...prev]);
-    return newAnnouncement;
+    try {
+      const ann = await announcementService.broadcastAnnouncement(
+        text,
+        urgency,
+        currentUser
+      );
+      setAnnouncements((prev) => [ann, ...prev]);
+      return ann;
+    } catch (err) {
+      console.warn('AfyaQueue: broadcastAnnouncement backend error:', err);
+      const fallbackAnn: Announcement = {
+        id: `ann-${Date.now()}`,
+        text: text.trim(),
+        urgency,
+        postedBy: currentUser?.name ?? 'Desk Officer',
+        postedByRole: currentUser?.role === 'staff' ? 'Receptionist' : 'Staff',
+        facility: 'Moi Teaching & Referral Hospital',
+        createdAt: Date.now(),
+      };
+      setAnnouncements((prev) => [fallbackAnn, ...prev]);
+      return fallbackAnn;
+    }
   };
 
   const dismissAnnouncement = (id: string) => {
+    try {
+      announcementService.deleteAnnouncement(id);
+    } catch (err) {
+      console.warn('AfyaQueue: dismissAnnouncement error:', err);
+    }
     setAnnouncements((prev) => prev.filter((a) => a.id !== id));
   };
 
@@ -443,13 +623,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const submitRating = async (
     params: Omit<DoctorRating, 'id' | 'createdAt'>
   ): Promise<DoctorRating> => {
-    const newRating: DoctorRating = {
-      ...params,
-      id: `rate-${Date.now()}`,
-      createdAt: Date.now(),
-    };
-    setRatings((prev) => [newRating, ...prev]);
-    return newRating;
+    try {
+      const newRating = await ratingService.submitRating(params);
+      setRatings((prev) => [newRating, ...prev]);
+      return newRating;
+    } catch (err) {
+      console.warn('AfyaQueue: submitRating backend error:', err);
+      const fallbackRating: DoctorRating = {
+        ...params,
+        id: `rate-${Date.now()}`,
+        createdAt: Date.now(),
+      };
+      setRatings((prev) => [fallbackRating, ...prev]);
+      return fallbackRating;
+    }
   };
 
   // Settings
@@ -457,6 +644,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setNotificationSettings((prev) => {
       const next = { ...prev, ...partial };
       AsyncStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(next));
+      if (currentUser?.uid) {
+        authService.updateNotificationSettings(currentUser.uid, next).catch(() => {});
+      }
       return next;
     });
   };
